@@ -2,40 +2,34 @@ import { verifyAccessToken } from "lib/auth.token";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Secret } from 'jsonwebtoken';
 import { ApiResponseDto } from "dto/apiResponseDto";
+import jwt from 'jsonwebtoken';
 import { ProfileDto } from "dto/rentn.dto";
 import { prisma } from "config/prisma.connect";
+import { findRentn } from "lib/check.db";
 
 export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse
 ) {
     try {
-        const { cookies} = req;
-        const rentn_cookies = cookies.rentn_cookies
-        const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret;
-        if (!rentn_cookies) {
-            return res.status(403).send({
-                message: 'hey, what are you trying to do?... Not authorized!!',
-                date: new Date(),
-                url: req.url
-            })
+        const { authorization: rentn } = req.headers;
+        if(!rentn){
+          res.status(401).send({
+            message: 'access token unavailable, access not granted'
+          })
         }
-        
-        // Verify the access token
-        const verifyJwtPayload = verifyAccessToken(rentn_cookies, accessTokenSecret)
-    
-        if (!verifyJwtPayload) {
-          return res.status(401).json({
-            message: "Invalid or expired access token, please login to continue",
+        const token: any = rentn?.split('')[1]
+        const decode: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as Secret )
+        const {id, email } = decode
+
+        // ensure that the user exist
+        const userExist = await findRentn(email)
+        if(!userExist){
+          return res.status(404).json({
+            message: "oops, who are you? not allowed to make such request",
           });
         }
-
-        const {id, email, role } = verifyJwtPayload as {id: string, email: string, role?: string }
-    
-        // Retrieve the user's profile data from the request body
         const profileData: ProfileDto = req.body;
-    
-        // create a new profile for the rentn user
         const createProfile = await prisma.profile.create({
             data: {
                 firstName: profileData.firstName,
@@ -45,7 +39,6 @@ export default async function handler (
                 phoneNumber: profileData.phoneNumber,
             }
         })
-
         switch (profileData.role) {
             case 'Agent':
               await prisma.agent.create({
@@ -58,7 +51,6 @@ export default async function handler (
                 },
               });
               break;
-          
             case 'User':
               await prisma.users.create({
                 data: {
@@ -70,7 +62,6 @@ export default async function handler (
                 },
               });
               break;
-          
             case 'Admin':
               await prisma.admin.create({
                 data: {
@@ -82,14 +73,12 @@ export default async function handler (
                 },
               });
               break;
-          
             default:
               res.status(401).send({
                 message: 'your user role is not defined...'
               })
-              break;
+            break;
         }
-    
         const response: ApiResponseDto<any> = {
           statusCode: 201,
           data: createProfile,
@@ -97,7 +86,6 @@ export default async function handler (
           url: req.url,
           message: "Profile completed successfully",
         };
-    
         res.status(201).json(response);
       } catch (error: any) {
         console.error(error);
