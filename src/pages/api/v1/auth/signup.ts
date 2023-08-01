@@ -13,7 +13,6 @@ export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-
     const ifError = rentnSchemaValidator(req.body)
     if (ifError) {
         return res.status(400).send({
@@ -22,13 +21,12 @@ export default async function handler (
             date: new Date(),
         })
     }
-
     const {otp, secret} = await OtpGenerator();
-    
     const newUser: RentnDto = req.body;
     const resend = new Resend(process.env.RESEND_RENTN_API_KEY)
     try {
-        if (await findRentn(newUser.email)){
+        const emailExits = await findRentn(newUser.email)
+        if(!emailExits) {
             const createNewUser = await prisma.rentn.create({
                 data: {
                     email: newUser.email,
@@ -37,42 +35,32 @@ export default async function handler (
                     otp: otp,
                 }
             })
-
             const emailContent = RentnSignUpEmail({
                 rentnOtp: otp,
                 email: newUser.email
             });
-
             await resend.sendEmail({
                 from: 'onboarding@resend.dev',
                 to: newUser.email,
                 subject: 'Rentn Email Confirmation',
                 react: emailContent,
             });
-
             const response:ApiResponseDto<RentnDto> = {
                 statusCode: 201,
                 data: createNewUser,
                 date: new Date(),
                 url: req.url,
                 message: 'you have successfully created an account, please check your email to complete profile',
-            };
-            
+            }; 
             res.status(201).send(response)
-            // res.redirect('/verify') redirect users to the otp verification route
         } else {
             res.status(400).send({
                 message: 'user with this email already exist'
             })
         }
-
     } catch (error: any) {
         console.log(error)
-        if (error.code == 'P2002' && error.meta?.target?.includes('email')) {
-            return res.status(404).json({
-                message: 'oops, this email already exist',
-            })
-        }
+        console.log(error.message)
         return res.status(500).send({
             message: 'sever is currently unavailable',
             data: error.message

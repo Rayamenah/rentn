@@ -1,35 +1,15 @@
 import { prisma } from "config/prisma.connect";
 import cache from "./cacheData";
+import { Rentn } from "@prisma/client";
 
-// TODO: setup CI/CD for the project after done with apartment upload
-
-
-//TODO: look for way to get rid of multiple apartment in the same community and address and number
-
-
-export async function findRentn(email: string): Promise<any> {
+export async function findRentn(email: string): Promise<Rentn | null> {
   try {
-    const key = `findRentn:${email}`;
-
-    // check if results exits in the cache
-    const cachedResult = cache.get(key);
-    if (cachedResult !== undefined) {
-      return cachedResult
-    }
-
-    const findRentn = await prisma.rentn.findUnique({
+    const rentn = await prisma.rentn.findUnique({
       where: {
-        email: email
+        email: email,
       },
-      select: {
-        email: true,
-        password: true,
-      },
-    })
-    
-    const result = !findRentn
-    cache.set(key, result)
-    return result;
+    });
+    return rentn;
   } catch (error: any) {
     throw new Error(`${error}, occurred from fetching db query in findRentn`)
   }
@@ -54,6 +34,5 @@ export async function addNewApartment(
   if (apartment){
     throw new Error('an apartment with that address or community already exits')
   }
-
   return !apartment
 }
