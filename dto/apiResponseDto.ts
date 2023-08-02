@@ -1,8 +1,7 @@
-// works for every success request
-export interface ApiResponseDto<T> {
+export interface ApiResponseDto {
     statusCode: number;
     message: string;
-    data: T;
+    data: any;
     url: any;
     date: Date;
 }
