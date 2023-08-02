@@ -2,11 +2,8 @@ import { prisma } from "config/prisma.connect";
 import { serialize } from "cookie";
 import { RentnLogin } from "dto/rentn.dto";
 import { createAccessToken } from "lib/auth.token";
-import { findRentn } from "lib/check.db";
 import { comparePasswordHash } from "lib/hash.password.helper";
-import { RentnLoginValidationBody } from "lib/schema.validator";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Role } from '../../../../../dto/rentn.dto';
 
 export default async function handler(
     req: NextApiRequest,
@@ -41,14 +38,13 @@ export default async function handler(
                     path: "/",
                 }
             )
-            res.setHeader("rentn", atCookie);
-            // Return success response
+            res.setHeader("Set-Cookie", atCookie);
             return res.status(200).send({
                 message: 'Login successful',
                 data: rentnUser,
+                token: atCookie
             });
           }
-          
         }
         else {
             return res.status(400).send({
