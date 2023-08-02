@@ -30,12 +30,13 @@ export interface AgentProfileDto {
 export interface ProfileDto {
     firstName: string;
     lastName: string;
+    address: string;
     phoneNumber: string;
     gender: Gender;
     role: Role;
 }
 
 enum Gender {
-    Male = 'male',
-    Female = 'female',
+    Male = 'Male',
+    Female = 'Female',
 }
