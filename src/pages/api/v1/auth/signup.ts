@@ -45,7 +45,7 @@ export default async function handler (
                 subject: 'Rentn Email Confirmation',
                 react: emailContent,
             });
-            const response:ApiResponseDto<RentnDto> = {
+            const response:ApiResponseDto = {
                 statusCode: 201,
                 data: createNewUser,
                 date: new Date(),
