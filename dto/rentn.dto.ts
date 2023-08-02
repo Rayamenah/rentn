@@ -14,9 +14,9 @@ export interface RentnLogin {
 }
 
 export enum Role {
-    Agent = 'Agent',
-    User = 'User',
-    Admin = 'Admin'
+    Agent = 'agent',
+    User = 'user',
+    Admin = 'admin'
 }
 
 export interface AgentProfileDto {
@@ -36,6 +36,6 @@ export interface ProfileDto {
 }
 
 enum Gender {
-    Male = 'Male',
-    Female = 'Female',
+    Male = 'male',
+    Female = 'female',
 }
