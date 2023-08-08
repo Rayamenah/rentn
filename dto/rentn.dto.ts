@@ -18,12 +18,16 @@ export enum Role {
     User = 'user',
     Admin = 'admin'
 }
+enum Gender {
+    Male = 'Male',
+    Female = 'Female',
+}
 
 export interface AgentProfileDto {
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    address?: string;
+    address: string;
     gender: string;
 }
 
@@ -36,7 +40,16 @@ export interface ProfileDto {
     role: Role;
 }
 
-enum Gender {
-    Male = 'Male',
-    Female = 'Female',
+export interface UserProfileDto {
+    username: string;
+    email: string;
+    role: Role
+    password: string;
+}
+
+export interface AdminProfileDto {
+    username: string;
+    email: string;
+    password: string;
+    role: Role
 }
