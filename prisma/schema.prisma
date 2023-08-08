@@ -43,12 +43,24 @@ model Agent {
 
 model Users {
   userId    String   @id @default(uuid())
+  email     String
+  password  String
+  role ROLE @default(user)
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  @@index([userId])
 }
 
 model Admin {
-  adminId String @id @default(uuid())
+  adminId   String   @id @default(uuid())
+  email     String
+  password  String
+  role ROLE @default(admin)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  @@index([adminId])
 }
 
 enum GENDER {
@@ -105,3 +117,13 @@ enum ProfileStatus {
 
 // run migration with npx prisma migrate dev --name init
 // npx prisma format
+
+
+// Update available 4.15.0 -> 5.1.1                          │
+// │                                                         │
+// │  This is a major update - please follow the guide at    │
+// │  https://pris.ly/d/major-version-upgrade                │
+// │                                                         │
+// │  Run the following to update                            │
+// │    npm i --save-dev prisma@latest                       │
+// │    npm i @prisma/client@latest    
