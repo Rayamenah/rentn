@@ -19,7 +19,6 @@ export default async function handler (
                 error: otpError
             })
         }
-
         const rentnUser: VerifyOtpDto = req.body
         const user = await prisma.rentn.findUnique({
             where: {
