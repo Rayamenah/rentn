@@ -28,12 +28,20 @@ export default async function handler (
             message: "oops, who are you? not allowed to make such request",
           });
         }
+        const dateTime = new Date()
+        const exactTimeDate = dateTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            second: 'numeric',
+        });
         const profileData: ProfileDto = req.body;
         if(profileData.role === 'agent') {
           const createAgent = await prisma.agent.create({
             data: {
               firstName: profileData.firstName,
               lastName: profileData.lastName,
+              email: email,
               gender: profileData.gender,
               address: profileData.address,
               phoneNumber: profileData.phoneNumber,
@@ -43,7 +51,7 @@ export default async function handler (
           const response: ApiResponseDto = {
             statusCode: 201,
             data: createAgent,
-            date: new Date(),
+            date: exactTimeDate,
             url: req.url,
             message: "Profile completed successfully",
           };
@@ -60,7 +68,7 @@ export default async function handler (
           const response: ApiResponseDto = {
             statusCode: 201,
             data: createUser,
-            date: new Date(),
+            date: exactTimeDate,
             url: req.url,
             message: "Profile completed successfully",
           };
@@ -77,7 +85,7 @@ export default async function handler (
           const response: ApiResponseDto = {
             statusCode: 201,
             data: createAdmin,
-            date: new Date(),
+            date: exactTimeDate,
             url: req.url,
             message: "Profile completed successfully",
           };
