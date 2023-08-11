@@ -39,6 +39,13 @@ export default async function handler (
                 rentnOtp: otp,
                 email: newUser.email
             });
+            const dateTime = new Date()
+            const exactTimeDate = dateTime.toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+                second: 'numeric',
+            });
             await resend.sendEmail({
                 from: 'onboarding@resend.dev',
                 to: newUser.email,
@@ -48,7 +55,7 @@ export default async function handler (
             const response:ApiResponseDto = {
                 statusCode: 201,
                 data: createNewUser,
-                date: new Date(),
+                date: exactTimeDate,
                 url: req.url,
                 message: 'you have successfully created an account, please check your email to complete profile',
             }; 
