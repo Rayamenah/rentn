@@ -35,16 +35,16 @@ export default async function handler (
                     otp: otp,
                 }
             })
-            const emailContent = RentnSignUpEmail({
-                rentnOtp: otp,
-                email: newUser.email
-            });
             const dateTime = new Date()
             const exactTimeDate = dateTime.toLocaleString('en-US', {
                 hour: 'numeric',
                 minute: 'numeric',
                 hour12: true,
                 second: 'numeric',
+            });
+            const emailContent = RentnSignUpEmail({
+                rentnOtp: otp,
+                email: newUser.email
             });
             await resend.sendEmail({
                 from: 'onboarding@resend.dev',
