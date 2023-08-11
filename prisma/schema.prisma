@@ -21,7 +21,10 @@ model Rentn {
   createdAt DateTime @default(now()) @db.Timestamptz()
   otp       String
   secret    String
-
+  agent Agent?
+  admin Admin?
+  user Users?
+  
   @@index([rentnId, email])
 }
 
@@ -29,10 +32,12 @@ model Agent {
   agentId       String        @id @default(uuid())
   firstName     String
   lastName      String
+  email         String        @unique
   phoneNumber   String
   address       String
   gender        GENDER
   apartments    Apartment?
+  rentn Rentn @relation(fields: [agentId], references: [rentnId])
   role          ROLE          @default(agent)
   createdAt     DateTime      @default(now()) @db.Timestamptz()
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
@@ -43,9 +48,10 @@ model Agent {
 
 model Users {
   userId    String   @id @default(uuid())
-  email     String
+  email     String   @unique
   password  String
-  role ROLE @default(user)
+  role      ROLE     @default(user)
+  rentn Rentn @relation(fields: [userId], references: [rentnId])
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
 
@@ -54,9 +60,10 @@ model Users {
 
 model Admin {
   adminId   String   @id @default(uuid())
-  email     String
+  email     String   @unique
   password  String
-  role ROLE @default(admin)
+  rentn Rentn @relation(fields: [adminId], references: [rentnId])
+  role      ROLE     @default(admin)
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
 
@@ -101,7 +108,6 @@ model Apartment {
   updatedAt     DateTime @updatedAt @db.Timestamptz()
   price         Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
   images        String[]
-  profileId     String   @unique
 
   @@unique([apartmentId, apartmentType])
   @@index([apartmentId])
@@ -117,7 +123,6 @@ enum ProfileStatus {
 
 // run migration with npx prisma migrate dev --name init
 // npx prisma format
-
 
 // Update available 4.15.0 -> 5.1.1                          │
 // │                                                         │

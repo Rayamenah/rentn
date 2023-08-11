@@ -53,3 +53,9 @@ export interface AdminProfileDto {
     password: string;
     role: Role
 }
+
+export interface ResetDto {
+    email: string,
+    otp: string
+    password: string
+}

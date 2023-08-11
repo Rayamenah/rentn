@@ -1,6 +1,6 @@
 import { prisma } from "config/prisma.connect";
 import cache from "./cacheData";
-import { Rentn } from "@prisma/client";
+import { Agent, Rentn } from "@prisma/client";
 
 export async function findRentn(email: string): Promise<Rentn | null> {
   try {
@@ -8,10 +8,30 @@ export async function findRentn(email: string): Promise<Rentn | null> {
       where: {
         email: email,
       },
+      include: {
+        admin: true,
+        agent: true,
+        user: true
+      }
     });
     return rentn;
   } catch (error: any) {
     throw new Error(`${error}, occurred from fetching db query in findRentn`)
+  }
+}
+export async function findAgent(email: string): Promise<Agent | null> {
+  try {
+    const findAgent = await prisma.agent.findUnique({
+      where: {
+        email: email,
+      },
+      include: {
+        rentn: true
+      }
+    });
+    return findAgent;
+  } catch (error: any) {
+    throw new Error(`${error}, occurred from fetching agent db to query the data`)
   }
 }
 
