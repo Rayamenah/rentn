@@ -3,5 +3,5 @@ export interface ApiResponseDto {
     message: string;
     data: any;
     url: any;
-    date: Date;
+    date: string;
 }
