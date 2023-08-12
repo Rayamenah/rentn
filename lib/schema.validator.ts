@@ -305,3 +305,12 @@ export function RentnLoginValidationBody(data: any) {
         return fromZodError(err).message
     }
 }
+
+export function SearchHouseSchema(data: any){
+    const searchHouse = zod.array(zod.string())
+    try{
+        searchHouse.parse(data)
+    } catch(error: any) {
+        return fromZodError(error).message
+    }
+}
