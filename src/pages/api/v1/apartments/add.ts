@@ -1,76 +1,86 @@
 import { prisma } from "config/prisma.connect";
 import { ApartmentDto } from "dto/agent.dto.interface";
 import { ApiResponseDto } from "dto/apiResponseDto";
+import { Secret, verify } from "jsonwebtoken";
 import { addNewApartment } from "lib/check.db";
-import { errorHelper } from "lib/errorHelper";
 import { apartmentSchemaValidation } from "lib/schema.validator";
 import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler (
     req: NextApiRequest, 
     res: NextApiResponse
 ) {
-
-    const validateApartmentSchema = apartmentSchemaValidation(req.body)
-    if(validateApartmentSchema){
-        return res.status(400).send({
-            message: 'the req body sent is not correct || acceptable',
-            data: validateApartmentSchema
-        })
-    }
-
     try {
-
-        const newApartment: ApartmentDto = req.body;
-        //TODO:find agent
-        // TODO: validate if an agent has completed his/her profile and has logged in
-
-        // const findAgent = await prisma.agent.findUnique({
-        //     where: {
-        //         agentId
-        //     }
-        // })
-        if( await addNewApartment(newApartment.address, newApartment.community)){
-            const createNewApartment = await prisma.apartment.create({
-                data: {
-                    address: newApartment.address,
-                    community: newApartment.community,
-                    apartmentType: newApartment.apartmentType,
-                    price: {
-                        connect: {
-                            //apartmentId
-                            //priceId
-                            //apartmentId_apartmentType
-
-                        }
-                    },
-                    description: newApartment.description,
-                    images: newApartment.images,
-                    contact: {
-                        connect: {
-                            //agentId: 
-                            //email
-                            //phoneNumber
-                        }
-                    }
-                }
+        const { cookies } = req.body
+        const authorization: any = cookies.rentn
+        if(!authorization) {
+            res.status(401).send({
+                message: 'access token unavailable, access not granted'
             })
-
-            const apartmentResponse: ApiResponseDto<ApartmentDto> = {
-                statusCode: 201,
-                data: createNewApartment,
-                message: 'successful',
-                url: req.url,
-                date: new Date(),
-            }
-            res.send(apartmentResponse)
-        } else {
-            // use custom error helper
-            res.send()
         }
-
+        const payload = verify(
+            authorization,
+            process.env.ACCESS_TOKEN_SECRET as Secret
+        )
+        const { id, email, role } = payload as { id: string, email: string, role: string}
+        const findAgent = await prisma.agent.findUnique({
+            where: {
+                email: email
+            }
+        })
+        if(!findAgent && (role !== 'agent')) {
+            return res.status(404).send({
+                message: "sorry, you're not allowed to access this route. contact support",
+            })
+        }
+        const validateApartmentSchema = apartmentSchemaValidation(req.body)
+        if(validateApartmentSchema){
+            return res.status(400).send({
+                message: 'the req body sent is not correct || acceptable',
+                data: validateApartmentSchema
+        })}
+        const dateTime = new Date()
+        const exactTimeDate = dateTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            second: 'numeric',
+        });
+        const newApartment: ApartmentDto = req.body;
+        await addNewApartment(newApartment.address, newApartment.community)
+        const createNewApartment = await prisma.apartment.create({
+            data: {
+                address: newApartment.address,
+                community: newApartment.community,
+                apartmentType: newApartment.apartmentType,
+                name: newApartment.name,
+                agent: {
+                    connect: {
+                        agentId: findAgent?.agentId
+                    }
+                },
+                features: newApartment.features,
+                price: {
+                    create: {
+                        price: newApartment.price,
+                        tenure: newApartment.tenure
+                    }
+                },
+                description: newApartment.description,
+                images: newApartment.images,
+            }
+        })
+        const apartmentResponse: ApiResponseDto = {
+            statusCode: 201,
+            data: createNewApartment,
+            message: 'you have successfully added an apartment for listing',
+            url: req.url,
+            date: exactTimeDate,
+        }
+        res.status(200).send(apartmentResponse)
     } catch (error: any) {
-        console.log('error', error)
-        // custom error helper
-        return res.send()
+        console.error(error);
+        res.status(500).json({
+          message: "Internal server error",
+        });
     }
 }
