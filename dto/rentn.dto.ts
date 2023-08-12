@@ -18,9 +18,9 @@ export enum Role {
     User = 'user',
     Admin = 'admin'
 }
-enum Gender {
-    Male = 'Male',
-    Female = 'Female',
+export enum Gender {
+    Male = 'male',
+    Female = 'female',
 }
 
 export interface AgentProfileDto {
