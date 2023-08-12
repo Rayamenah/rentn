@@ -185,16 +185,20 @@ export function apartmentSchemaValidation(data: {}){
         apartmentType: zod
             .string()
             .nonempty('the type of apartment must be available')
-            .min(5, 'add more details about the apartment type you want to rent')
             .trim(),
         images: zod
             .string()
             .optional()
             .array(),
         price: zod
-            .number()
-            .nonnegative('please add a valid number'),
-            //added array to the schema validation, if it does not work I'll remove it
+            .string()
+            .trim(),
+        name: zod
+            .string()
+            .trim(),
+        features: zod
+            .string()
+            .trim(),
     })
     try{
         apartmentValidation.parse(data)
@@ -202,7 +206,6 @@ export function apartmentSchemaValidation(data: {}){
         console.log('apartment validation error::::', err)
         return fromZodError(err).message
     }
-
 }
 
 export function priceSchemaValidation(data: {}){
