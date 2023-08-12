@@ -71,8 +71,8 @@ model Admin {
 }
 
 enum GENDER {
-  Male
-  Female
+  male
+  female
 }
 
 enum Status {
@@ -118,11 +118,11 @@ enum ProfileStatus {
 }
 
 enum ApartmentType {
-  SELF_CONTAIN
-  TWO_BEDROOM
-  THREE_BEDROOM
-  HOSTEL
-  BEDSITTER
+  self_contain
+  two_bedroom
+  three_bedroom
+  hostel
+  bedsitter
 }
 
 // run migration with npx prisma migrate dev --name init
