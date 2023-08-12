@@ -27,7 +27,7 @@ export default async function handler (
                 email: email
             }
         })
-        if(!findAgent && (role !== 'agent')) {
+        if(!findAgent || role !== 'agent'){
             return res.status(404).send({
                 message: "sorry, you're not allowed to access this route. contact support",
             })
