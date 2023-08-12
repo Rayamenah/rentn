@@ -22,12 +22,23 @@ export interface UpdateAgentDto {
     password?: string;
 }
 
+export enum ApartmentType{
+    SELF_CONTAIN = 'self_contain',
+    TWO_BEDROOM = 'two_bedroom',
+    THREE_BEDROOM = 'three_bedroom',
+    HOSTEL = 'hostel',
+    BEDSITTER = 'bedsitter'
+}
+
 export interface ApartmentDto {
     address: string;
+    name: string;
     community: string;
-    apartmentType: string;
-    price: any;
+    apartmentType: ApartmentType
+    features: string[]
+    price: string;
     description: string;
-    contact: any;
     images?: string;
+    tenure: number
 }
+

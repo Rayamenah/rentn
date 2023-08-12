@@ -38,7 +38,7 @@ export async function findAgent(email: string): Promise<Agent | null> {
 export async function addNewApartment(
   address: string,
   community: string
-): Promise<boolean>{
+): Promise<void>{
   const apartment = await prisma.apartment.findFirst({
     where: {
       OR: [
@@ -52,7 +52,6 @@ export async function addNewApartment(
     }
   });
   if (apartment){
-    throw new Error('an apartment with that address or community already exits')
+    throw new Error(`An apartment with address "${address}" or community "${community}" already exists.`);
   }
-  return !apartment
 }

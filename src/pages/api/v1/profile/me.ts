@@ -4,6 +4,8 @@ import { ProfileDto, UserProfileDto, AdminProfileDto } from "dto/rentn.dto";
 import { prisma } from "config/prisma.connect";
 import { findRentn } from "lib/check.db";
 import { Secret, verify } from "jsonwebtoken";
+import { serialize } from "cookie";
+import { createAccessToken } from "lib/auth.token";
 
 export default async function handler (
     req: NextApiRequest,
@@ -55,6 +57,17 @@ export default async function handler (
             url: req.url,
             message: "Profile completed successfully",
           };
+          const atCookie = serialize(
+            "rentn",
+            createAccessToken(createAgent.agentId, createAgent.email, createAgent.role),
+            {
+                httpOnly: false,
+                sameSite: "strict",
+                maxAge: 60 * 60 * 24 * 2, // expires in 2 days
+                path: "/",
+            }
+          )
+          res.setHeader("Set-Cookie", atCookie);
           res.status(201).json(response);
         }
         if(profileData.role === 'user') {
@@ -72,6 +85,17 @@ export default async function handler (
             url: req.url,
             message: "Profile completed successfully",
           };
+          const atCookie = serialize(
+            "rentn",
+            createAccessToken(createUser.userId, createUser.email, createUser.role),
+            {
+                httpOnly: false,
+                sameSite: "strict",
+                maxAge: 60 * 60 * 24 * 2, // expires in 2 days
+                path: "/",
+            }
+          )
+          res.setHeader("Set-Cookie", atCookie);
           res.status(201).json(response);
         }
         if(profileData.role === 'admin') {
@@ -89,6 +113,17 @@ export default async function handler (
             url: req.url,
             message: "Profile completed successfully",
           };
+          const atCookie = serialize(
+            "rentn",
+            createAccessToken(createAdmin.adminId, createAdmin.email, createAdmin.role),
+            {
+                httpOnly: false,
+                sameSite: "strict",
+                maxAge: 60 * 60 * 24 * 2, // expires in 2 days
+                path: "/",
+            }
+          )
+          res.setHeader("Set-Cookie", atCookie);
           res.status(201).json(response);
         }
       } catch (error: any) {

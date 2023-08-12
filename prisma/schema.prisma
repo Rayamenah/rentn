@@ -21,10 +21,10 @@ model Rentn {
   createdAt DateTime @default(now()) @db.Timestamptz()
   otp       String
   secret    String
-  agent Agent?
-  admin Admin?
-  user Users?
-  
+  agent     Agent?
+  admin     Admin?
+  user      Users?
+
   @@index([rentnId, email])
 }
 
@@ -37,13 +37,13 @@ model Agent {
   address       String
   gender        GENDER
   apartments    Apartment?
-  rentn Rentn @relation(fields: [agentId], references: [rentnId])
+  rentn         Rentn         @relation(fields: [agentId], references: [rentnId])
   role          ROLE          @default(agent)
   createdAt     DateTime      @default(now()) @db.Timestamptz()
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
   profileStatus ProfileStatus @default(ACTIVE)
 
-  @@index([agentId])
+  @@index([agentId, email])
 }
 
 model Users {
@@ -51,28 +51,28 @@ model Users {
   email     String   @unique
   password  String
   role      ROLE     @default(user)
-  rentn Rentn @relation(fields: [userId], references: [rentnId])
+  rentn     Rentn    @relation(fields: [userId], references: [rentnId])
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
 
-  @@index([userId])
+  @@index([userId, email])
 }
 
 model Admin {
   adminId   String   @id @default(uuid())
   email     String   @unique
   password  String
-  rentn Rentn @relation(fields: [adminId], references: [rentnId])
+  rentn     Rentn    @relation(fields: [adminId], references: [rentnId])
   role      ROLE     @default(admin)
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
 
-  @@index([adminId])
+  @@index([adminId, email])
 }
 
 enum GENDER {
-  Male
-  Female
+  male
+  female
 }
 
 enum Status {
@@ -81,32 +81,28 @@ enum Status {
 }
 
 model Price {
-  priceId       String    @id @default(uuid())
-  createdAt     DateTime  @default(now()) @db.Timestamptz()
-  price         Decimal   @default(0.00) @db.Decimal(10, 2)
-  tenure        Int       @default(1)
-  updatedAt     DateTime  @updatedAt @db.Timestamptz()
-  apartment     Apartment @relation(fields: [apartmentId, apartmentType], references: [apartmentId, apartmentType], onUpdate: Cascade)
-  apartmentId   String
-  apartmentType String
+  priceId   String    @id @default(uuid())
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  price     Decimal   @default(0.00) @db.Decimal(10, 2)
+  tenure    Int       @default(1)
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  apartment Apartment @relation(fields: [priceId], references: [apartmentId], onUpdate: Cascade)
 
-  @@unique([apartmentId, apartmentType])
   @@index([priceId])
 }
 
 model Apartment {
-  apartmentId   String   @id @default(uuid())
-  agentId       String   @default(uuid())
-  name          String   @db.VarChar(50)
-  description   String   @db.VarChar(5000)
-  address       String   @db.VarChar(200)
-  community     String   @db.VarChar(50)
-  createdAt     DateTime @default(now()) @db.Timestamptz()
-  apartmentType String
+  apartmentId   String        @id @default(uuid())
+  name          String        @db.VarChar(50)
+  description   String        @db.Text()
+  address       String        @db.VarChar(200)
   features      String[]
-  agent         Agent    @relation(fields: [apartmentId], references: [agentId])
-  updatedAt     DateTime @updatedAt @db.Timestamptz()
-  price         Price? // working with this for not required yet, if it fails I'll change it to required or a better solution
+  community     String        @db.VarChar(50)
+  createdAt     DateTime      @default(now()) @db.Timestamptz()
+  apartmentType ApartmentType
+  agent         Agent         @relation(fields: [apartmentId], references: [agentId])
+  updatedAt     DateTime      @updatedAt @db.Timestamptz()
+  price         Price?
   images        String[]
 
   @@unique([apartmentId, apartmentType])
@@ -119,6 +115,14 @@ enum ProfileStatus {
   ACTIVE // current active user on the rentn platform
   INACTIVE // user who has been inactive for the last 30 days or more
   DISABLED // a user who request that his/her profile be deleted
+}
+
+enum ApartmentType {
+  self_contain
+  two_bedroom
+  three_bedroom
+  hostel
+  bedsitter
 }
 
 // run migration with npx prisma migrate dev --name init
