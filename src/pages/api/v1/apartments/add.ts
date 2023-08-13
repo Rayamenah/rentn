@@ -35,7 +35,7 @@ export default async function handler (
         const validateApartmentSchema = apartmentSchemaValidation(req.body)
         if(validateApartmentSchema){
             return res.status(400).send({
-                message: 'the req body sent is not correct || acceptable',
+                message: 'the req body sent is not correct or acceptable',
                 data: validateApartmentSchema
         })}
         const dateTime = new Date()
