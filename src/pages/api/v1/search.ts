@@ -23,7 +23,6 @@ export default async function handler(
                 message: 'Invalid page number. Please provide a valid page number greater than or equal to 1.',
             });
         }
-        
         const totalCount = await prisma.apartment.count()
         const totalPages = Math.ceil(totalCount/pageSize)
         const offset = (parsedPageNumber - 1) * pageSize
@@ -54,7 +53,6 @@ export default async function handler(
             currentPage: pageNumber,
             message: 'request was successful'
         })
-
     }catch(error: any) {
         console.log(error)
         console.log(error.message)
