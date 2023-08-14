@@ -1,5 +1,5 @@
-import Login from '@/auth/Login';
-import SignUp from '@/auth/SignUp';
+import Login from '@/components/auth/Login';
+import SignUp from '@/components/auth/SignUp';
 import { useState } from 'react';
 type Props = {}
 
@@ -15,7 +15,7 @@ const Authentication: React.FC<Props> = () => {
     });
 
     const handleSubmit = () => {
-
+        // e.preventDefault()
     }
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

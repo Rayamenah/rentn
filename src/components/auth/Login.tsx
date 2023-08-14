@@ -11,7 +11,7 @@ type Props = {
 const Login = ({ form, handleSubmit, onChange, setForm }: Props) => {
 
     return (
-        <div className='w-full px-2 sm:flex sm:justify-center'>
+        <div className='w-full px-4 sm:flex sm:justify-center'>
             <form className='relative w-full h-[70vh] max-w-xl flex flex-col gap-5'
                 onSubmit={handleSubmit}>
                 <label htmlFor='password' className='text-xs font-semibold'>EMAIL ADDRESS</label>

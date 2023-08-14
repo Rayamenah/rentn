@@ -10,7 +10,7 @@ type Props = {
 const SignUp = ({ form, handleSubmit, onChange, setForm }: Props) => {
 
     return (
-        <div className='relative px-2 w-full sm:flex sm:justify-center'>
+        <div className='relative px-4 w-full sm:flex sm:justify-center'>
             <form className='relative w-full h-[70vh] max-w-xl flex flex-col gap-5'
                 onSubmit={handleSubmit}>
                 <>
