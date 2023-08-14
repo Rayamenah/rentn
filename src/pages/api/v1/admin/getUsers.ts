@@ -1,41 +1,56 @@
-// this returns an array of all the users in the database
-
-import { getAllUsers } from "lib/check.db";
+import { prisma } from "config/prisma.connect";
+import { Secret, verify } from "jsonwebtoken";
+import { usersPaginationHelper } from "lib/paginator";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse,
 ){
-    // TODO: check the auth dir and see if they're anymore validations for you to make
     try {
-        const email: string = "";
-        const getUsers = await getAllUsers(email);
-        if (getUsers.length == 0){
-            res.status(200).send({
-                message: 'there are no current users available in the database',
-                date: new Date()
-            })
-        } else {
-            const mapUsers = getUsers.map((v) => {
-                return {
-                    name: v.name,
-                    email: v.email,
-                    createdAt: v.createdAt,
-                    phoneNumber: v.phoneNumber,
-                    verified: v.verified,
-                }
-            })
-            res.status(200).send({
-                message: 'returned all the list of users from the database',
-                data: mapUsers,
-                date: new Date(),
+        const { cookies, pageNumber } = req.body
+        const authorization: any = cookies.rentn
+        if(!authorization) {
+            res.status(401).send({
+                message: 'access token unavailable, access not granted'
             })
         }
-    } catch (error: any) {
-        throw new Error("there's an error fetching from the database", error)
+        const payload = verify(
+            authorization,
+            process.env.ACCESS_TOKEN_SECRET as Secret
+        )
+        const { id, email, role } = payload as { id: string, email: string, role: string}
+        if(role !== 'admin'){
+            return res.status(404).send({
+                message: "sorry, you're not allowed to access this route. contact support",
+            })
+        }
+        const findAdmin = await prisma.admin.findUnique({
+            where: {
+                email: email
+            }
+        })
+        if(!findAdmin){
+            return res.status(404).send({
+                message: "sorry, can't find admin profile details",
+            })
+        }
+        const getUsers = await usersPaginationHelper(pageNumber)
+        if (!getUsers) {
+            return res.status(404).send({
+              message: "No agents found",
+            });
+        }
+        res.status(200).send({
+            message: 'returned all the agents from the database',
+            data: getUsers,
+        })
+    }catch (error: any) {
+        console.log('error from database:::', error)
+        res.status(500).send({
+            message: 'database not available',
+            data: error.message
+        })
     }
 
 }
-
-// TODO: add database pagination for users as the size increases

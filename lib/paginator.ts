@@ -67,10 +67,10 @@ export async function rentnPaginationHelper(
 }
 
 export async function usersPaginationHelper(
-    pageNumber: number,
-    pageSize: number,
+    pageNumber: number,    
 ) {
     try{
+        const pageSize = 10
         const totalCount = await prisma.users.count()
         const totalPages = Math.ceil(totalCount/pageSize)
         const offset = (pageNumber - 1) * pageSize
