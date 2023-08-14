@@ -2,14 +2,13 @@ import { prisma } from "config/prisma.connect";
 
 export async function agentPaginationHelper(
     pageNumber: number,
-    pageSize: number
     
 ) {
+    const pageSize = 10
     try {
         const totalCount = await prisma.agent.count();
         const totalPages = Math.ceil(totalCount/pageSize)
         const offset = (pageNumber - 1) * pageSize
-
         const data = await prisma.agent.findMany({
             take: pageSize,
             skip: offset,
@@ -17,14 +16,16 @@ export async function agentPaginationHelper(
                 createdAt: 'asc'
             },
             include: {
-                rentn: true
+                rentn: true,
+                apartments: true,
             }
         })
         return {
             data,
             totalCount,
             totalPages,
-            currentPage: pageNumber
+            currentPage: pageNumber,
+            message: 'returned all apartments successfully'
         }
     }catch(error: any) {
         console.error('Error fetching paginated results agent:', error);
@@ -66,10 +67,10 @@ export async function rentnPaginationHelper(
 }
 
 export async function usersPaginationHelper(
-    pageNumber: number,
-    pageSize: number,
+    pageNumber: number,    
 ) {
     try{
+        const pageSize = 10
         const totalCount = await prisma.users.count()
         const totalPages = Math.ceil(totalCount/pageSize)
         const offset = (pageNumber - 1) * pageSize
@@ -95,13 +96,12 @@ export async function usersPaginationHelper(
 
 export async function apartmentsPaginationHelper(
     pageNumber: number,
-    pageSize: number,
 ) {
     try{
+        const pageSize = 10
         const totalCount = await prisma.apartment.count()
         const totalPages = Math.ceil(totalCount/pageSize)
         const offset = (pageNumber - 1) * pageSize
-
         const data = await prisma.apartment.findMany({
             take: pageSize,
             skip: offset,
@@ -117,7 +117,8 @@ export async function apartmentsPaginationHelper(
             data,
             totalCount,
             totalPages,
-            currentPage: pageNumber
+            currentPage: pageNumber,
+            message: 'returned all apartments successfully'
         }
     } catch(error: any) {
         console.error('Error fetching paginated results from apartment:', error);

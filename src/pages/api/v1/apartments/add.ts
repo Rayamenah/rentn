@@ -22,20 +22,25 @@ export default async function handler (
             process.env.ACCESS_TOKEN_SECRET as Secret
         )
         const { id, email, role } = payload as { id: string, email: string, role: string}
+        if(role !== 'agent') {
+            return res.status(404).send({
+                message: "sorry, you're not allowed to access this route. contact support",
+            })
+        }
         const findAgent = await prisma.agent.findUnique({
             where: {
                 email: email
             }
         })
-        if(!findAgent || role !== 'agent'){
+        if(!findAgent){
             return res.status(404).send({
-                message: "sorry, you're not allowed to access this route. contact support",
+                message: "sorry, profile not found in the database or the agent does not exist",
             })
         }
         const validateApartmentSchema = apartmentSchemaValidation(req.body)
         if(validateApartmentSchema){
             return res.status(400).send({
-                message: 'the req body sent is not correct || acceptable',
+                message: 'the req body sent is not correct or acceptable',
                 data: validateApartmentSchema
         })}
         const dateTime = new Date()
