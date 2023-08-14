@@ -51,7 +51,8 @@ export default async function handler(
             data: useSearchParams,
             pages: totalPages,
             count: totalCount,
-            currentPage: pageNumber
+            currentPage: pageNumber,
+            message: 'request was successful'
         })
 
     }catch(error: any) {
