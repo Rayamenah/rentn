@@ -6,14 +6,15 @@ import { findRentn } from "lib/check.db";
 import { Secret, verify } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { createAccessToken } from "lib/auth.token";
+import { uuid } from "uuidv4";
 
 export default async function handler (
     req: NextApiRequest,
     res: NextApiResponse
 ) {
     try {
-        const { cookies } = req
-        const authorization: any = cookies.rentn
+        const { headers } = req
+        const authorization: any = headers.authorization?.split(' ')[1];
         if(!authorization){
           res.status(401).send({
             message: 'access token unavailable, access not granted'
@@ -48,6 +49,7 @@ export default async function handler (
               address: profileData.address,
               phoneNumber: profileData.phoneNumber,
               role: profileData.role,
+              rentnId: id,
             }
           })
           const response: ApiResponseDto = {
@@ -70,40 +72,16 @@ export default async function handler (
           res.setHeader("Set-Cookie", atCookie);
           res.status(201).json(response);
         }
-        if(profileData.role === 'user') {
-          const userData:UserProfileDto = req.body
-          const createUser = await prisma.users.create({
-            data: {
-              email: userData.email,
-              password: userData.password,
-            }
-          })
-          const response: ApiResponseDto = {
-            statusCode: 201,
-            data: createUser,
-            date: exactTimeDate,
-            url: req.url,
-            message: "Profile completed successfully",
-          };
-          const atCookie = serialize(
-            "rentn",
-            createAccessToken(createUser.userId, createUser.email, createUser.role),
-            {
-                httpOnly: false,
-                sameSite: "strict",
-                maxAge: 60 * 60 * 24 * 2, // expires in 2 days
-                path: "/",
-            }
-          )
-          res.setHeader("Set-Cookie", atCookie);
-          res.status(201).json(response);
-        }
         if(profileData.role === 'admin') {
           const adminData: AdminProfileDto = req.body
           const createAdmin = await prisma.admin.create({
             data: {
-              email: adminData.email,
-              password: adminData.password
+              email: email,
+              address: adminData.address,
+              phoneNumber: adminData.phoneNumber,
+              username: adminData.username,
+              gender: adminData.gender,
+              rentnId: id
             }
           })
           const response: ApiResponseDto = {
@@ -115,7 +93,7 @@ export default async function handler (
           };
           const atCookie = serialize(
             "rentn",
-            createAccessToken(createAdmin.adminId, createAdmin.email, createAdmin.role),
+            createAccessToken(createAdmin.id, createAdmin.email, createAdmin.role),
             {
                 httpOnly: false,
                 sameSite: "strict",

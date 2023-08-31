@@ -14,7 +14,7 @@ const Agent = () => {
     });
     const [progressBar, setProgressBar] = useState(10);
     const [nextModal, setNextModal] = useState(0);
-    console.log(nextModal);
+    // console.log(nextModal);
 
     const router = useRouter()
     const goBack = () => {
