@@ -50,8 +50,10 @@ export interface UserProfileDto {
 export interface AdminProfileDto {
     username: string;
     email: string;
-    password: string;
     role: Role
+    address: string;
+    phoneNumber: string;
+    gender: Gender;
 }
 
 export interface ResetDto {
