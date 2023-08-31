@@ -11,7 +11,6 @@ export async function findRentn(email: string): Promise<Rentn | null> {
       include: {
         admin: true,
         agent: true,
-        user: true
       }
     });
     return rentn;
