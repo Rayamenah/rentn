@@ -27,7 +27,7 @@ export default async function handler (
             select: {
                 otp: true,
                 secret: true,
-                rentnId: true,
+                id: true,
                 email: true,
                 status: true
             }
@@ -73,7 +73,7 @@ export default async function handler (
             }
             const atCookie = serialize(
                     "rentn",
-                    createAccessToken(user.rentnId, user.email),
+                    createAccessToken(user.id, user.email),
                     {
                         httpOnly: false,
                         sameSite: "strict",
@@ -83,6 +83,7 @@ export default async function handler (
                     }
                 )
             res.setHeader("rentn_cookie", atCookie)
+            console.log(atCookie)
             return res.status(200).send({
                 message: 'OTP verified successfully, please continue to update profile',
               });
