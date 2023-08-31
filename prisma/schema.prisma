@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum ROLE {
@@ -14,7 +15,7 @@ enum ROLE {
 }
 
 model Rentn {
-  rentnId   String   @id @default(uuid())
+  id        String   @id @default(uuid())
   email     String   @unique
   status    Status   @default(NOT_VERIFIED)
   password  String
@@ -23,9 +24,8 @@ model Rentn {
   secret    String
   agent     Agent?
   admin     Admin?
-  user      Users?
 
-  @@index([rentnId, email])
+  @@index([id, email])
 }
 
 model Agent {
@@ -36,8 +36,9 @@ model Agent {
   phoneNumber   String
   address       String
   gender        GENDER
-  apartments    Apartment?
-  rentn         Rentn         @relation(fields: [agentId], references: [rentnId])
+  apartments    Apartment[]
+  rentn         Rentn         @relation(fields: [rentnId], references: [id])
+  rentnId       String        @unique
   role          ROLE          @default(agent)
   createdAt     DateTime      @default(now()) @db.Timestamptz()
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
@@ -46,28 +47,20 @@ model Agent {
   @@index([agentId, email])
 }
 
-model Users {
-  userId    String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      ROLE     @default(user)
-  rentn     Rentn    @relation(fields: [userId], references: [rentnId])
-  createdAt DateTime @default(now()) @db.Timestamptz()
-  updatedAt DateTime @updatedAt @db.Timestamptz()
-
-  @@index([userId, email])
-}
-
 model Admin {
-  adminId   String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  rentn     Rentn    @relation(fields: [adminId], references: [rentnId])
-  role      ROLE     @default(admin)
-  createdAt DateTime @default(now()) @db.Timestamptz()
-  updatedAt DateTime @updatedAt @db.Timestamptz()
+  id          String   @id @default(uuid())
+  email       String   @unique
+  username    String   @unique
+  phoneNumber String
+  address     String
+  gender      GENDER
+  rentn       Rentn    @relation(fields: [rentnId], references: [id])
+  rentnId     String   @unique @default(uuid())
+  role        ROLE     @default(admin)
+  createdAt   DateTime @default(now()) @db.Timestamptz()
+  updatedAt   DateTime @updatedAt @db.Timestamptz()
 
-  @@index([adminId, email])
+  @@index([id, email])
 }
 
 enum GENDER {
@@ -80,19 +73,8 @@ enum Status {
   VERIFIED
 }
 
-model Price {
-  priceId   String    @id @default(uuid())
-  createdAt DateTime  @default(now()) @db.Timestamptz()
-  price     Decimal   @default(0.00) @db.Decimal(10, 2)
-  tenure    Int       @default(1)
-  updatedAt DateTime  @updatedAt @db.Timestamptz()
-  apartment Apartment @relation(fields: [priceId], references: [apartmentId], onUpdate: Cascade)
-
-  @@index([priceId])
-}
-
 model Apartment {
-  apartmentId   String        @id @default(uuid())
+  id            String        @id @default(uuid())
   name          String        @db.VarChar(50)
   description   String        @db.Text()
   address       String        @db.VarChar(200)
@@ -100,13 +82,15 @@ model Apartment {
   community     String        @db.VarChar(50)
   createdAt     DateTime      @default(now()) @db.Timestamptz()
   apartmentType ApartmentType
-  agent         Agent         @relation(fields: [apartmentId], references: [agentId])
+  agent         Agent         @relation(fields: [agentId], references: [agentId])
+  agentId       String        @default(uuid())
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
-  price         Price?
+  price         Decimal       @default(0.00) @db.Decimal(10, 2)
+  tenure        Int           @default(0)
   images        String[]
 
-  @@unique([apartmentId, apartmentType])
-  @@index([apartmentId])
+  @@unique([id, apartmentType])
+  @@index([id])
 }
 
 enum ProfileStatus {
