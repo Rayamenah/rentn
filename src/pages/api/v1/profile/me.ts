@@ -13,7 +13,7 @@ export default async function handler (
 ) {
     try {
         const { headers } = req
-        const authorization: any = headers.authorization?.split(' ')[1];
+        const authorization: any = headers.authorization?.split(' ')[1] || headers.cookie?.split('=')[1]
         if(!authorization){
           res.status(401).send({
             message: 'access token unavailable, access not granted'
