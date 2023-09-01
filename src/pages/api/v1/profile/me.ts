@@ -6,7 +6,6 @@ import { findRentn } from "lib/check.db";
 import { Secret, verify } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { createAccessToken } from "lib/auth.token";
-import { uuid } from "uuidv4";
 
 export default async function handler (
     req: NextApiRequest,
