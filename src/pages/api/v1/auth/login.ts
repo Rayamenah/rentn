@@ -9,8 +9,8 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const login: RentnLogin = req.body;
     try {
+        const login: RentnLogin = req.body;
         const rentnUser = await prisma.rentn.findUnique({
             where: {
                 email: login.email,
@@ -18,7 +18,7 @@ export default async function handler(
             select: {
                 email: true,
                 password: true,
-                rentnId: true,
+                id: true,
             }
         })
         if (rentnUser){
@@ -30,7 +30,7 @@ export default async function handler(
           } else {
             const atCookie = serialize(
                 "rentn",
-                createAccessToken(rentnUser.rentnId, rentnUser.email),
+                createAccessToken(rentnUser.id, rentnUser.email),
                 {
                     httpOnly: false,
                     sameSite: "strict",
