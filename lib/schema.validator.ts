@@ -191,14 +191,13 @@ export function apartmentSchemaValidation(data: {}){
             .optional()
             .array(),
         price: zod
-            .string()
-            .trim(),
+            .number(),
         name: zod
             .string()
             .trim(),
         features: zod
             .string()
-            .trim(),
+            .array(),
     })
     try{
         apartmentValidation.parse(data)

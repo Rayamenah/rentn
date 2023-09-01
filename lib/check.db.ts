@@ -50,7 +50,7 @@ export async function addNewApartment(
       community: true,
     }
   });
-  if (apartment){
-    throw new Error(`An apartment with address "${address}" or community "${community}" already exists.`);
-  }
+  // if (apartment){
+  //   throw new Error(`An apartment with address "${address}" or community "${community}" already exists.`);
+  // }
 }

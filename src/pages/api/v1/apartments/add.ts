@@ -10,8 +10,10 @@ export default async function handler (
     res: NextApiResponse
 ) {
     try {
-        const { cookies } = req.body
-        const authorization: any = cookies.rentn
+        const { headers } = req
+        console.log(headers)
+        const authorization: any = headers.cookie?.split('=')[1] || headers.authorization?.split(' ')[1]
+        console.log(authorization)
         if(!authorization) {
             res.status(401).send({
                 message: 'access token unavailable, access not granted'
@@ -22,11 +24,6 @@ export default async function handler (
             process.env.ACCESS_TOKEN_SECRET as Secret
         )
         const { id, email, role } = payload as { id: string, email: string, role: string}
-        if(role !== 'agent') {
-            return res.status(404).send({
-                message: "sorry, you're not allowed to access this route. contact support",
-            })
-        }
         const findAgent = await prisma.agent.findUnique({
             where: {
                 email: email
@@ -35,6 +32,11 @@ export default async function handler (
         if(!findAgent){
             return res.status(404).send({
                 message: "sorry, profile not found in the database or the agent does not exist",
+            })
+        }
+        if(findAgent?.role !== 'agent'){
+            return res.status(404).send({
+                message: "sorry, you're not allowed to access this route. contact support",
             })
         }
         const validateApartmentSchema = apartmentSchemaValidation(req.body)
@@ -64,12 +66,8 @@ export default async function handler (
                     }
                 },
                 features: newApartment.features,
-                price: {
-                    create: {
-                        price: newApartment.price,
-                        tenure: newApartment.tenure
-                    }
-                },
+                price: newApartment.price,
+                tenure: newApartment.tenure,
                 description: newApartment.description,
                 images: newApartment.images,
             }

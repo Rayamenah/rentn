@@ -6,7 +6,6 @@ import { findRentn } from "lib/check.db";
 import { Secret, verify } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { createAccessToken } from "lib/auth.token";
-import { uuid } from "uuidv4";
 
 export default async function handler (
     req: NextApiRequest,
@@ -14,7 +13,7 @@ export default async function handler (
 ) {
     try {
         const { headers } = req
-        const authorization: any = headers.authorization?.split(' ')[1];
+        const authorization: any = headers.authorization?.split(' ')[1] || headers.cookie?.split('=')[1]
         if(!authorization){
           res.status(401).send({
             message: 'access token unavailable, access not granted'

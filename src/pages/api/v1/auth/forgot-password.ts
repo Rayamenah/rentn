@@ -51,7 +51,7 @@ export default async function handler(
             data: updateAcct,
             date: exactTimeDate,
             url: req.url,
-            message: 'you have successfully created an account, please check your email to complete profile',
+            message: 'otp has been sent to your mail, please proceed to continue',
         };
         res.status(201).send(response)
     }catch(error: any) {
