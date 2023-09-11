@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { TbArrowLeft } from 'react-icons/tb';
 import Location from '@/components/Listing/Location';
 import Features from '@/components/Listing/Features';
+import Images from '@/components/Listing/Images';
 
 const Agent = () => {
     const [formDetails, setFormDetails] = useState({
@@ -58,9 +59,9 @@ const Agent = () => {
     }
 
     const modalContents = [
-        { modal: <Location form={formDetails} setForm={setFormDetails} /> },
-        { modal: <Features /> },
-        //     { modal: <Book formDetails={formDetails} formUpdate={formUpdate} /> },
+        { modal: <Location form={formDetails} setForm={setFormDetails} progress={progress} /> },
+        { modal: <Features progress={progress} regress={regress} /> },
+        { modal: <Images progress={progress} regress={regress} /> },
         //     { modal: <SucessModal formDetails={formDetails} setShowModal={setShowModal} />},
     ];
 
@@ -68,7 +69,7 @@ const Agent = () => {
 
     return (
         <section className='flex flex-col gap-y-3'>
-            <div className='flex h-10 px-2 items-center'>
+            <div className='flex h-10 px-2 justify-between items-center'>
                 <div className='w-1/3 flex items-center pl-4'>
                     <button onClick={goBack}>
                         <TbArrowLeft className='w-6 h-6' />
@@ -77,38 +78,43 @@ const Agent = () => {
                 <div className='w-2/3 h-10 pl-4 flex items-center font-bold'>
                     <p>Create new Listing</p>
                 </div>
+                <div />
             </div>
 
             {/* Progress Bar */}
             {nextModal < 3 && (
-                <div className='relative w-[90%] mx-auto'>
-                    <div className='mx-auto h-[2px] border'>
-                        <div
-                            style={{
-                                width: progressBar + '%',
-                                height: '2px',
-                                background: 'black',
-                                transition: 'width 0.5s'
-                            }}
-                        />
+                <>
+                    <div className='relative w-[90%] mx-auto'>
+                        <div className='mx-auto h-[2px] border'>
+                            <div
+                                style={{
+                                    width: progressBar + '%',
+                                    height: '2px',
+                                    background: 'black',
+                                    transition: 'width 0.5s'
+                                }}
+                            />
 
-                    </div >
-                    <div className={`absolute transition-all -top-full left-[10%] w-2 h-2 rounded-full ${(progressBar >= 10) ? 'bg-black w-3 h-3 -top-[180%]' : 'bg-gray-400'} `} />
-                    <div className={`absolute transition-all -top-full left-[50%] w-2 h-2 rounded-full ${(progressBar >= 50) ? 'bg-black w-3 h-3 -top-[180%]' : 'bg-gray-400'} `} />
-                    <div className={`absolute transition-all -top-full left-[90%] w-2 h-2 rounded-full ${(progressBar == 100) ? 'bg-black w-3 h-3 -top-[180%]' : 'bg-gray-400'} `} />
-                </div>
+                        </div >
+                        <div className={`absolute transition-all -top-full left-[10%] w-2 h-2 rounded-full ${(progressBar >= 10) ? 'bg-black w-3 h-3 -top-[200%]' : 'bg-gray-400'} `} />
+                        <div className={`absolute transition-all -top-full left-[50%] w-2 h-2 rounded-full ${(progressBar >= 50) ? 'bg-black w-3 h-3 -top-[200%]' : 'bg-gray-400'} `} />
+                        <div className={`absolute transition-all -top-full left-[90%] w-2 h-2 rounded-full ${(progressBar == 100) ? 'bg-black w-3 h-3 -top-[200%]' : 'bg-gray-400'} `} />
+                    </div>
+                    <div className='w-[90%] m-auto flex text-[0.6rem] justify-around'>
+                        <p>Hostel info</p>
+                        <p>Pricing</p>
+                        <p>Images & videos</p>
+                    </div>
+                </>
             )}
 
-            <button onClick={progress}>NEXT</button>
-            <button onClick={regress}>BACK</button>
-
             {/* Modal Contents */}
-            <section className='w-full flex justify-center'>
+            <section>
                 {modalContents[nextModal].modal}
             </section>
             {/* Next Button */}
             {/* Rendering different buttons depending on the displayed modal components  */}
-            <div className=''>
+            {/* <div className=''>
                 {nextModal == 0 ? (
                     <button
                         className=' '
@@ -135,7 +141,7 @@ const Agent = () => {
                     ) : (
                         ''
                     )}
-            </div>
+            </div> */}
         </section>
     )
 }
