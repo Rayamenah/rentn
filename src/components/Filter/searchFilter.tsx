@@ -22,20 +22,17 @@ type filterType = {
 
 const SearchFilter = ({ className }: SliderProps) => {
     const [price, setPrice] = useState(340)
-    const [filter, setFilter] = useState<filterType>({
-        community: 'iterigbi',
-        houseType: 'bedsitter',
-    })
+    const [community, setCommunity] = useState('iterigbi')
+    const [house, setHouse] = useState('Bedsitter')
 
-    const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+    // const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // }
 
-    console.log(filter)
+    // console.log(filter)
 
     return (
-        <div
-            className="border w-[90%] rounded-lg ">
+        <section className="border w-[90%] rounded-lg ">
             <div className=" w-full border ">
                 <div className="m-1 flex gap-2">
                     <SlLocationPin className='w-3 ' />
@@ -44,11 +41,10 @@ const SearchFilter = ({ className }: SliderProps) => {
                 <div className="m-1 flex justify-center">
                     <Select
                         name='community'
-                        value={filter.houseType}
-                    // onValueChange={() => (changeValue)}
+                        onValueChange={(item) => setCommunity(item)}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select Community" />
+                            <SelectValue placeholder={community} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -70,12 +66,12 @@ const SearchFilter = ({ className }: SliderProps) => {
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
-                        value={filter.houseType}
+                        // value={house}
                         name='houseType'
-                        onValueChange={() => (changeValue)}
+                        onValueChange={(item) => setHouse(item)}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select house type" />
+                            <SelectValue placeholder={house} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -102,8 +98,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                             max={1000}
                             step={1}
                             className={cn("w-full", className)}
-                            onValueChange={(value: number[]) => setPrice(value[0])}
-                        />
+                            onValueChange={(value: number[]) => setPrice(value[0])} />
                         <p>1m</p>
                     </div>
                 </div>
@@ -111,7 +106,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                     <button className='h-full p-2 w-1/2  bg-gray-500 rounded-lg text-sm text-gray-700'>Search</button>
                 </div>
             </div>
-        </div>
+        </section >
     )
 }
 

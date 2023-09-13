@@ -28,7 +28,7 @@ const Authentication: React.FC<Props> = () => {
 
 
     return (
-        <section className='w-full h-full sm:flex overflow-hidden'>
+        <section className='w-full h-[90vh] sm:flex overflow-hidden'>
             {/* first half of the page */}
             <div className='relative hidden sm:flex sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white '>
                 <div className='flex justify-center items-center w-full h-8'>

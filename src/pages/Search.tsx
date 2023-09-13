@@ -35,10 +35,10 @@ const Search = () => {
                     </div>
                 </div>
 
-                <div className='w-full h-[70vh] p-2 gap-3 flex justify-around flex-wrap md:w-2/3 overflow-y-scroll'>
+                <div className='w-full h-[70vh] p-2 gap-3 flex justify-center md:justify-around flex-wrap md:w-2/3 overflow-y-scroll'>
                     {/* card */}
                     {arr.map(item => (
-                        <section key={item} className='w-[48%] h-[14rem] sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]'>
+                        <section key={item} className='w-[48%] h-[14rem] xs:w-full sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]'>
                             <div className='w-full h-[70%] relative'>
                                 <Image src='' alt='house-image' fill />
                             </div>

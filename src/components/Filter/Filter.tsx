@@ -21,17 +21,20 @@ type filterType = {
 
 const Filter = ({ className }: SliderProps) => {
     const [price, setPrice] = useState(340)
-    const [filter, setFilter] = useState<filterType>({
-        community: 'iterigbi',
-        houseType: 'bedsitter',
-    })
+    const [community, setCommunity] = useState('iterigbi')
+    const [house, setHouse] = useState('Bedsitter')
 
+    // const [filter, setFilter] = useState<filterType>({
+    //     community: 'iterigbi',
+    //     houseType: 'bedsitter',
+    // })
+
+    // console.log(community)
     // console.log(filter.houseType)
-    console.log(filter.community)
 
-    const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+    // const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // }
 
 
 
@@ -48,11 +51,12 @@ const Filter = ({ className }: SliderProps) => {
                 <div className="m-1 flex justify-center">
                     <Select
                         name='community'
-                        value={filter.community}
-                        onValueChange={(item) => setFilter(prev => ({ ...prev, community: item }))}
+                        // defaultValue={community}
+                        // value={community}
+                        onValueChange={(item) => setCommunity(item)}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select Community" />
+                            <SelectValue placeholder={community} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -73,12 +77,13 @@ const Filter = ({ className }: SliderProps) => {
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
-                        value={filter.houseType}
+                        // value={house}
+                        // defaultValue={house}
                         name='houseType'
-                        onValueChange={(item) => setFilter(prev => ({ ...prev, houseType: item }))}
+                        onValueChange={(item) => setHouse(item)}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select house type" />
+                            <SelectValue placeholder={house} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
