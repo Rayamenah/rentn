@@ -1,49 +1,59 @@
-import { useRef, useState } from "react";
-import Image from "next/image"
+import {
+    Dispatch,
+    SetStateAction,
+    useRef,
+    useState,
+} from "react";
+import Image from "next/image";
+import { listingType } from "dto/form.dto";
 
 type Props = {
-    progress: () => void;
-    regress: () => void
-}
+    image: File[];
+    setImage: Dispatch<SetStateAction<listingType>>;
+    // setImage: React.Dispatch<React.SetStateAction<File[]>>
+};
 
-export default function Images({ regress }: Props) {
-    const [image, setImage] = useState<File[]>([])
+export default function Images({ image, setImage }: Props) {
+    const selectedFileRef = useRef<HTMLInputElement>(null);
 
-    const selectedFileRef = useRef<HTMLInputElement>(null)
-
-    console.log(image)
-
-    const selectedFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files
-        if (files) setImage(Array.from(files))
-    }
+    const selectedFile = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const files = e.target.files;
+        if (files)
+            setImage((prev) => ({
+                ...prev,
+                images: Array.from(files),
+            }));
+    };
 
     return (
-        <section>
-            <aside className='flex justify-center items-center p-10'>
+        <section className="flex justify-center items-center h-full">
+            <aside className="flex justify-center items-center">
                 {/* {image ?
-                    (<div>
+                    (<div className='h-full'>
                         {image.map(item => (
                             <Image key={item.name} src={item.name} alt='uploaded-image' width={50} height={50} />
                         ))}
                     </div>) : */}
                 <div
                     onClick={() => selectedFileRef.current?.click()}
-                    className='h-full py-20 px-12 flex justify-center border border-black rounded-lg cursor-pointer'>
+                    className="h-full py-20 px-12 flex justify-center border border-black rounded-lg cursor-pointer"
+                >
                     <input
                         ref={selectedFileRef}
-                        type='file'
-                        accept='.jpg,.png'
+                        type="file"
+                        accept=".jpg,.png"
                         multiple
                         hidden
                         onChange={selectedFile}
                     />
-                    <img src='/Vector.png' />
-                    <p className='font-semibold text-sm'>cick to add images/videos</p>
+                    <img src="/Vector.png" />
+                    <p className="font-semibold text-sm">
+                        cick to add images/videos
+                    </p>
                 </div>
             </aside>
         </section>
-
-
-    )
+    );
 }

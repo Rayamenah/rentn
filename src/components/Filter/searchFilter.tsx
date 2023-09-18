@@ -6,24 +6,23 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { cn } from "@/lib/utils"
-import { useState } from "react"
-import { SlLocationPin } from "react-icons/sl"
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { SlLocationPin } from "react-icons/sl";
 
-
-type SliderProps = React.ComponentProps<typeof Slider>
+type SliderProps = React.ComponentProps<typeof Slider>;
 
 type filterType = {
     community: string;
     houseType: string;
-}
+};
 
 const SearchFilter = ({ className }: SliderProps) => {
-    const [price, setPrice] = useState(340)
-    const [community, setCommunity] = useState('iterigbi')
-    const [house, setHouse] = useState('Bedsitter')
+    const [price, setPrice] = useState(340);
+    const [community, setCommunity] = useState("iterigbi");
+    const [house, setHouse] = useState("Bedsitter");
 
     // const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
     //     setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -35,12 +34,14 @@ const SearchFilter = ({ className }: SliderProps) => {
         <section className="border w-[90%] rounded-lg ">
             <div className=" w-full border ">
                 <div className="m-1 flex gap-2">
-                    <SlLocationPin className='w-3 ' />
-                    <p className="text-xs text-gray-700">Search axis</p>
+                    <SlLocationPin className="w-3 " />
+                    <p className="text-xs text-gray-700">
+                        Search axis
+                    </p>
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
-                        name='community'
+                        name="community"
                         onValueChange={(item) => setCommunity(item)}
                     >
                         <SelectTrigger className="w-full">
@@ -49,11 +50,19 @@ const SearchFilter = ({ className }: SliderProps) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Communities</SelectLabel>
-                                <SelectItem value="Iterigbi">Iterigbi</SelectItem>
-                                <SelectItem value="Ugbomro">Ugbomro</SelectItem>
+                                <SelectItem value="Iterigbi">
+                                    Iterigbi
+                                </SelectItem>
+                                <SelectItem value="Ugbomro">
+                                    Ugbomro
+                                </SelectItem>
                                 <SelectItem value="Ugolo">Ugolo</SelectItem>
-                                <SelectItem value="Okuokoko">Okuokoko</SelectItem>
-                                <SelectItem value="Agbarho">Agbarho</SelectItem>
+                                <SelectItem value="Okuokoko">
+                                    Okuokoko
+                                </SelectItem>
+                                <SelectItem value="Agbarho">
+                                    Agbarho
+                                </SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -61,13 +70,18 @@ const SearchFilter = ({ className }: SliderProps) => {
             </div>
             <div className="w-full border">
                 <div className="m-1 flex gap-2">
-                    <img className='w-3' src='/chevron-right.svg' />
-                    <p className="text-xs text-gray-700">Type of house</p>
+                    <img
+                        className="w-3"
+                        src="/chevron-right.svg"
+                    />
+                    <p className="text-xs text-gray-700">
+                        Type of house
+                    </p>
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
                         // value={house}
-                        name='houseType'
+                        name="houseType"
                         onValueChange={(item) => setHouse(item)}
                     >
                         <SelectTrigger className="w-full">
@@ -76,19 +90,30 @@ const SearchFilter = ({ className }: SliderProps) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>House type</SelectLabel>
-                                <SelectItem value="Okuokoko">Bedsitter</SelectItem>
-                                <SelectItem value="Iterigbi">Self Contain</SelectItem>
-                                <SelectItem value="Ugbomro">2 Bedroom</SelectItem>
-                                <SelectItem value="Ugolo">3 Bedroom</SelectItem>
+                                <SelectItem value="Okuokoko">
+                                    Bedsitter
+                                </SelectItem>
+                                <SelectItem value="Iterigbi">
+                                    Self Contain
+                                </SelectItem>
+                                <SelectItem value="Ugbomro">
+                                    2 Bedroom
+                                </SelectItem>
+                                <SelectItem value="Ugolo">
+                                    3 Bedroom
+                                </SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
             </div>
-            <div className='flex-1'>
+            <div className="flex-1">
                 <div className="p-2  flex flex-col items-center justify-center border-b-black">
                     <div className="m-1 w-full">
-                        <p className="text-xs text-gray-700">Annual rent: {price == 1000 ? '1m' : price + 'k'}</p>
+                        <p className="text-xs text-gray-700">
+                            Annual rent:{" "}
+                            {price == 1000 ? "1m" : price + "k"}
+                        </p>
                     </div>
                     <div className="m-1 text-[10px] flex justify-center gap-2 w-full">
                         <p>100k</p>
@@ -98,16 +123,21 @@ const SearchFilter = ({ className }: SliderProps) => {
                             max={1000}
                             step={1}
                             className={cn("w-full", className)}
-                            onValueChange={(value: number[]) => setPrice(value[0])} />
+                            onValueChange={(value: number[]) =>
+                                setPrice(value[0])
+                            }
+                        />
                         <p>1m</p>
                     </div>
                 </div>
-                <div className='flex p-2 flex-1 justify-center items-center'>
-                    <button className='h-full p-2 w-1/2  bg-gray-500 rounded-lg text-sm text-gray-700'>Search</button>
+                <div className="flex p-2 flex-1 justify-center items-center">
+                    <button className="h-full p-2 w-1/2  bg-gray-500 rounded-lg text-sm text-gray-700">
+                        Search
+                    </button>
                 </div>
             </div>
-        </section >
-    )
-}
+        </section>
+    );
+};
 
-export default SearchFilter
+export default SearchFilter;

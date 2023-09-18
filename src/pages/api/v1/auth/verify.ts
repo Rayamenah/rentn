@@ -6,7 +6,7 @@ import { OtpZodError } from "lib/schema.validator";
 import { NextApiRequest, NextApiResponse } from "next";
 import speakeasy from 'speakeasy';
 
-export default async function handler (
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
@@ -68,25 +68,25 @@ export default async function handler (
             });
 
             let secure = true
-            if(process.env.NODE_ENV !== 'production'){
+            if (process.env.NODE_ENV !== 'production') {
                 secure = false;
             }
             const atCookie = serialize(
-                    "rentn",
-                    createAccessToken(user.id, user.email),
-                    {
-                        httpOnly: false,
-                        sameSite: "strict",
-                        secure: secure,
-                        maxAge: 60 * 60 * 24 * 1, // expires in 1 day
-                        path: "/",
-                    }
-                )
+                "rentn",
+                createAccessToken(user.id, user.email),
+                {
+                    httpOnly: false,
+                    sameSite: "strict",
+                    secure: secure,
+                    maxAge: 60 * 60 * 24 * 1, // expires in 1 day
+                    path: "/",
+                }
+            )
             res.setHeader("rentn_cookie", atCookie)
             console.log(atCookie)
             return res.status(200).send({
                 message: 'OTP verified successfully, please continue to update profile',
-              });
+            });
         } else {
             return res.status(400).send({
                 message: 'sorry, otp invalid or has expired',

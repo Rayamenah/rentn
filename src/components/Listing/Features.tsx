@@ -1,5 +1,5 @@
-
-import { useState } from "react"
+import { listingType } from "dto/form.dto";
+import { Dispatch, SetStateAction, useState } from "react";
 // import { toast } from "@/components/ui/use-toast"
 
 // const items = [
@@ -22,66 +22,129 @@ import { useState } from "react"
 
 // ] as const
 
-
 type Props = {
-    progress: () => void;
-    regress: () => void
-}
+    price: string;
+    features: listingType;
+    tenure: string;
+    setPrice: Dispatch<SetStateAction<listingType>>;
+    setFeatures: Dispatch<SetStateAction<listingType>>;
+};
 
-export default function Features({ progress, regress }: Props) {
-    const [checkedValues, setCheckedValues] = useState({
-        bedroom: true,
-        toilet: true,
-        guestRoom: false,
-        parkingSpace: false
-    })
-    const [price, setPrice] = useState(2000)
+export default function Features({
+    features,
+    setFeatures,
+    price,
+    setPrice,
+    tenure,
+}: Props) {
+    const { bedroom, toilet, guestRoom, parkingSpace } =
+        features.features;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, checked } = e.target
-        setCheckedValues({ ...checkedValues, [name]: checked })
-    }
+    // features will have to be changed from boolean to array of strings
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const { name, checked } = e.target;
+        setFeatures((prev) => ({
+            ...prev,
+            features: {
+                ...prev.features,
+                [name]: checked,
+            },
+        }));
+    };
 
     return (
-        <section className='p-8 md:flex md:justify-center' >
-
-            <section className='w-[50%] flex flex-col'>
-                <div className="flex text-base font-bold">FEATURES OF HOUSE</div>
+        <section className="p-8 md:flex md:justify-center">
+            <section className="sm:w-[50%] flex flex-col">
+                <div className="flex text-base font-bold">
+                    FEATURES OF HOUSE
+                </div>
                 <br />
                 <label>
-                    <input className='mr-2 text-black' type='checkbox' name='bedroom' checked={checkedValues.bedroom} onChange={handleChange} />
+                    <input
+                        className="mr-2 text-black"
+                        type="checkbox"
+                        name="bedroom"
+                        checked={bedroom}
+                        onChange={handleChange}
+                    />
                     Bedroom(s)
                 </label>
                 <label>
-                    <input className='mr-2 text-black' type='checkbox' name='toilet' checked={checkedValues.toilet} onChange={handleChange} />
+                    <input
+                        className="mr-2 text-black"
+                        type="checkbox"
+                        name="toilet"
+                        checked={toilet}
+                        onChange={handleChange}
+                    />
                     Toilet
                 </label>
                 <label>
-                    <input className='mr-2 text-black' type='checkbox' name='guestRoom' checked={checkedValues.guestRoom} onChange={handleChange} />
+                    <input
+                        className="mr-2 text-black"
+                        type="checkbox"
+                        name="guestRoom"
+                        checked={guestRoom}
+                        onChange={handleChange}
+                    />
                     Guest room(s)
                 </label>
                 <label>
-                    <input className='mr-2 text-black' type='checkbox' name='parkingSpace' checked={checkedValues.parkingSpace} onChange={handleChange} />
+                    <input
+                        className="mr-2 text-black"
+                        type="checkbox"
+                        name="parkingSpace"
+                        checked={parkingSpace}
+                        onChange={handleChange}
+                    />
                     Parking space
                 </label>
                 <br />
                 <aside>
-                    <p className='text-base font-bold'>PRICING</p>
-                    <div className='flex justify-between items-center max-w-sm'>
-                        <p className='text-sm font-semibold'>Annual Rent</p>
+                    <p className="text-base font-bold">
+                        PRICING & TENURE
+                    </p>
+                    <br />
+                    <div className="flex justify-between items-center max-w-md">
+                        <p className="text-sm font-semibold">
+                            Annual Rent
+                        </p>
                         <input
-                            className='max-w-[7rem] w-[7rem] h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none'
-                            type='number'
-                            name='description'
-                            placeholder='Enter amount'
+                            className="max-w-[7rem] w-[7rem] h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none"
+                            type="number"
+                            name="rent"
+                            placeholder="Enter amount"
                             required
                             value={price}
-                        // onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) =>
+                                setPrice((prev) => ({
+                                    ...prev,
+                                    price: e.target.value,
+                                }))
+                            }
+                        />
+                    </div>
+                    <div className="flex justify-between items-center max-w-md">
+                        <p className="text-sm font-semibold">Tenure</p>
+                        <input
+                            className="max-w-[7rem] w-[7rem] h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none"
+                            type="number"
+                            name="tenure"
+                            placeholder="Enter amount"
+                            required
+                            value={tenure}
+                            onChange={(e) =>
+                                setPrice((prev) => ({
+                                    ...prev,
+                                    tenure: e.target.value,
+                                }))
+                            }
                         />
                     </div>
                 </aside>
             </section>
-
         </section>
-    )
+    );
 }
