@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useState } from "react"
 
 const Navbar = () => {
-    const [select, setSelect] = useState('rent')
+    const [select, setSelect] = useState('')
     return (
         <nav className='w-full px-10 py-4 flex justify-between items-center'>
             <Link

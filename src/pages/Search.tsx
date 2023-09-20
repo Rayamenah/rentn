@@ -61,7 +61,7 @@ const Search = () => {
                             >
                                 <div className="w-full h-[70%] relative">
                                     <Image
-                                        src=""
+                                        src="/whatsapp_img1.svg"
                                         alt="house-image"
                                         fill
                                     />

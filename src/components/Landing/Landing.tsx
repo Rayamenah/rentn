@@ -15,7 +15,7 @@ const Landing = () => {
             {/* filter */}
             <Filter />
 
-            <p className='text-center text-xs'>Own a house for rent? <Link href='/Authentication' className='text-gray-700 underline cursor-pointer'>Sign up</Link></p>
+            <p className='text-center text-base'>Own a house for rent? <Link href='/Authentication' className='text-black font-bold underline cursor-pointer'>Sign up</Link></p>
         </section >
 
     )

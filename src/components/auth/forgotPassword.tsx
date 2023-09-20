@@ -9,7 +9,6 @@ type Props = {
 
 const Login = ({ form, onChange, setForm }: Props) => {
 
-    const [email, setOtp] = useState('')
     const handleSubmit = () => {
 
     }

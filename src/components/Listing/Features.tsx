@@ -55,8 +55,8 @@ export default function Features({
     };
 
     return (
-        <section className="p-8 md:flex md:justify-center">
-            <section className="sm:w-[50%] flex flex-col">
+        <section className="p-8 sm:flex sm:justify-center">
+            <section className="md:w-[50%] w-full flex flex-col">
                 <div className="flex text-base font-bold">
                     FEATURES OF HOUSE
                 </div>

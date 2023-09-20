@@ -26,8 +26,12 @@ const Location = ({ form, setForm }: Props) => {
         }));
     };
     return (
-        <aside className="w-full flex justify-center">
-            <form className="relative w-[80%] max-w-xl flex justify-center flex-col gap-2 p-4">
+        <aside className="p-8 flex justify-center items-center">
+            <form className="relative w-[90%] flex justify-center flex-col gap-2">
+                <div className="flex text-base font-bold">
+                    HOSTEL INFO
+                </div>
+                <br />
                 <label
                     htmlFor="name"
                     className="text-xs font-semibold"

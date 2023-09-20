@@ -13,6 +13,8 @@ const SignUp = ({
     onChange,
     setForm,
 }: Props) => {
+
+
     return (
         <div className="relative px-4 w-full sm:flex sm:justify-center">
             <form

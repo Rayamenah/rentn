@@ -1,5 +1,6 @@
 import Login from "@/components/auth/Login";
 import SignUp from "@/components/auth/SignUp";
+import VerifyOtp from "@/components/auth/verifyOtp";
 import Head from "next/head";
 import { useState } from "react";
 type Props = {};
@@ -12,10 +13,14 @@ const Authentication: React.FC<Props> = () => {
         password: "",
         phoneNo: "",
         isNewUser: false,
+        verified: true,
+        forgotPassword: true
     });
 
     const handleSignup = () => {
         // e.preventDefault()
+        // setForm(prev => ({ ...prev, verified: false }))
+
     };
     const handleLogin = () => {
         // e.preventDefault()
@@ -49,7 +54,7 @@ const Authentication: React.FC<Props> = () => {
                 />
             </Head>
 
-            <section className="w-full h-[90vh] sm:flex overflow-hidden">
+            <section className="w-full flex-grow sm:flex overflow-hidden">
                 {/* first half of the page */}
                 <div className="relative hidden sm:flex sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white ">
                     <div className="flex justify-center items-center w-full h-8">
@@ -78,8 +83,8 @@ const Authentication: React.FC<Props> = () => {
                             <div className="my-4   ">
                                 <span
                                     className={`transition-all text-xs cursor-pointer ${!form.isNewUser
-                                            ? "text-sm font-bold underline"
-                                            : ""
+                                        ? "text-sm font-bold underline"
+                                        : ""
                                         }`}
                                     onClick={() =>
                                         setForm((prev) => ({
@@ -94,8 +99,8 @@ const Authentication: React.FC<Props> = () => {
 
                                 <span
                                     className={`transition-all text-xs cursor-pointer ${!form.isNewUser
-                                            ? ""
-                                            : "text-sm font-bold underline"
+                                        ? ""
+                                        : "text-sm font-bold underline"
                                         }`}
                                     onClick={() =>
                                         setForm((prev) => ({
@@ -115,7 +120,7 @@ const Authentication: React.FC<Props> = () => {
                         </div>
 
                         {/* form section */}
-                        {form.isNewUser && (
+                        {(form.isNewUser && form.verified) && (
                             <SignUp
                                 form={form}
                                 setForm={setForm}
@@ -123,7 +128,7 @@ const Authentication: React.FC<Props> = () => {
                                 onChange={onChange}
                             />
                         )}
-                        {!form.isNewUser && (
+                        {(!form.isNewUser && form.verified) && (
                             <Login
                                 form={form}
                                 setForm={setForm}
@@ -131,6 +136,7 @@ const Authentication: React.FC<Props> = () => {
                                 onChange={onChange}
                             />
                         )}
+                        {!form.verified && <VerifyOtp setForm={setForm} />}
                     </section>
                 </div>
             </section>

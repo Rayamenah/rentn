@@ -1,10 +1,12 @@
 export interface signUpType {
     isNewUser: boolean,
+    verified: boolean;
     firstName: string,
     lastName: string,
     phoneNo: string,
     email: string,
     password: string,
+    forgotPassword: boolean
 }
 
 export interface listingType {
