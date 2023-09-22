@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { SiFacebook, SiTwitter } from "react-icons/si"
 const Footer = () => (
-    <footer className='p-2 gap-2 h-[250px] bg-[url(/footer-image.svg)] bg-transparent relative w-full bg-black text-white flex flex-col md:gap-4'>
+    <footer className='mt-10 p-2 gap-2 h-[250px] bg-[url(/footer-image.svg)] bg-transparent relative w-full bg-black text-white flex flex-col md:gap-4'>
         {/* <img className='absolute z-[-1] -top-10 left-0 w-full' src='/footer-image.svg' /> */}
         <div className='mt-11 w-full gap-2 sm:flex sm:px-3 sm:justify-between lg:mt-16'>
             <div className='w-full sm:w-1/2 md:w-1/3 '>

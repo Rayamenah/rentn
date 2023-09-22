@@ -21,30 +21,30 @@ export default async function handler(
                 id: true,
             }
         })
-        if (rentnUser){
-          const checkPassword =  await comparePasswordHash(login.password, rentnUser.password)
-          if(!checkPassword) {
-            return res.status(400).send({
-                message: 'invalid password or password does not match'
-            })
-          } else {
-            const atCookie = serialize(
-                "rentn",
-                createAccessToken(rentnUser.id, rentnUser.email),
-                {
-                    httpOnly: false,
-                    sameSite: "strict",
-                    maxAge: 60 * 60 * 24 * 1, // expires in 1 day
-                    path: "/",
-                }
-            )
-            res.setHeader("Set-Cookie", atCookie);
-            return res.status(200).send({
-                message: 'Login successful',
-                data: rentnUser,
-                token: atCookie
-            });
-          }
+        if (rentnUser) {
+            const checkPassword = await comparePasswordHash(login.password, rentnUser.password)
+            if (!checkPassword) {
+                return res.status(400).send({
+                    message: 'invalid password or password does not match'
+                })
+            } else {
+                const atCookie = serialize(
+                    "rentn",
+                    createAccessToken(rentnUser.id, rentnUser.email),
+                    {
+                        httpOnly: false,
+                        sameSite: "strict",
+                        maxAge: 60 * 60 * 24 * 1, // expires in 1 day
+                        path: "/",
+                    }
+                )
+                res.setHeader("Set-Cookie", atCookie);
+                return res.status(200).send({
+                    message: 'Login successful',
+                    data: rentnUser,
+                    token: atCookie
+                });
+            }
         }
         else {
             return res.status(400).send({
