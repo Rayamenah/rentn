@@ -16,10 +16,10 @@ export default async function handler(
             }
             const findById = prisma.apartment.findUnique({
                 where: {
-                    apartmentId: apartmentId
+                    id: apartmentId
                 },
                 include: {
-                    price: true,
+                    
                     agent: true
                 },
             })
@@ -51,11 +51,10 @@ export default async function handler(
             }
             const deleteApartment = prisma.apartment.delete({
                 where: {
-                    apartmentId: apartmentId
+                    id: apartmentId
                 },
                 include: {
                     agent: true,
-                    price: true,
                 },
             })
             return res.status(200).json({ message: "Apartment deleted successfully" });

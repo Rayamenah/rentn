@@ -36,9 +36,6 @@ export default async function handler(
             where: {
                 community: community as string,
                 apartmentType: apartmentType as ApartmentType,
-                price: {
-                    price: price as string
-                }
             },
             take: pageSize,
             skip: offset,

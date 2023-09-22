@@ -1,6 +1,5 @@
 import { prisma } from "config/prisma.connect";
 import { Secret, verify } from "jsonwebtoken";
-import { usersPaginationHelper } from "lib/paginator";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler (
@@ -35,16 +34,6 @@ export default async function handler (
                 message: "sorry, can't find admin profile details",
             })
         }
-        const getUsers = await usersPaginationHelper(pageNumber)
-        if (!getUsers) {
-            return res.status(404).send({
-              message: "No agents found",
-            });
-        }
-        res.status(200).send({
-            message: 'returned all the agents from the database',
-            data: getUsers,
-        })
     }catch (error: any) {
         console.log('error from database:::', error)
         res.status(500).send({

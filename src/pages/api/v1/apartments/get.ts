@@ -57,7 +57,6 @@ export default async function handler(
                 }
             },
             include: {
-                price: true,
                 agent: true
             },
             orderBy: {
