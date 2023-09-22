@@ -42,16 +42,16 @@ export default async function handler (
                 hour12: true,
                 second: 'numeric',
             });
-            const emailContent = RentnSignUpEmail({
-                rentnOtp: otp,
-                email: newUser.email
-            });
-            await resend.sendEmail({
-                from: 'onboarding@resend.dev',
-                to: newUser.email,
-                subject: 'Rentn Email Confirmation',
-                react: emailContent,
-            });
+            // const emailContent = RentnSignUpEmail({
+            //     rentnOtp: otp,
+            //     email: newUser.email
+            // });
+            // await resend.sendEmail({
+            //     from: 'onboarding@resend.dev',
+            //     to: newUser.email,
+            //     subject: 'Rentn Email Confirmation',
+            //     react: emailContent,
+            // });
             const response:ApiResponseDto = {
                 statusCode: 201,
                 data: createNewUser,
