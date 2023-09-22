@@ -1,6 +1,6 @@
 import Login from "@/components/auth/Login";
 import SignUp from "@/components/auth/SignUp";
-import VerifyOtp from "@/components/auth/verifyOtp";
+import VerifyOtp from "@/components/auth/verifyOTP";
 import Head from "next/head";
 import { useState } from "react";
 type Props = {};
