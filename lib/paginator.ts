@@ -48,7 +48,6 @@ export async function rentnPaginationHelper(
             include: {
                 agent: true,
                 admin: true,
-                user: true
             },
             orderBy: {
                 createdAt: 'asc'
@@ -66,33 +65,6 @@ export async function rentnPaginationHelper(
     }
 }
 
-export async function usersPaginationHelper(
-    pageNumber: number,    
-) {
-    try{
-        const pageSize = 10
-        const totalCount = await prisma.users.count()
-        const totalPages = Math.ceil(totalCount/pageSize)
-        const offset = (pageNumber - 1) * pageSize
-
-        const data = await prisma.users.findMany({
-            take: pageSize,
-            skip: offset,
-            orderBy: {
-                createdAt: 'asc'
-            }
-        })
-        return {
-            data,
-            totalCount,
-            totalPages,
-            currentPage: pageNumber
-        }
-    } catch(error: any) {
-        console.error('Error fetching paginated results from users:', error);
-        throw error;
-    }
-}
 
 export async function apartmentsPaginationHelper(
     pageNumber: number,
@@ -107,7 +79,6 @@ export async function apartmentsPaginationHelper(
             skip: offset,
             include: {
                 agent: true,
-                price: true
             },
             orderBy: {
                 createdAt: 'asc'
@@ -122,37 +93,6 @@ export async function apartmentsPaginationHelper(
         }
     } catch(error: any) {
         console.error('Error fetching paginated results from apartment:', error);
-        throw error;
-    }
-}
-
-export async function pricePaginationHelper(
-    pageNumber: number,
-    pageSize: number,
-) {
-    try{
-        const totalCount = await prisma.price.count()
-        const totalPages = Math.ceil(totalCount/pageSize)
-        const offset = (pageNumber - 1) * pageSize
-
-        const data = await prisma.price.findMany({
-            take: pageSize,
-            skip: offset,
-            include: {
-                apartment: true,
-            },
-            orderBy: {
-                createdAt: 'asc'
-            }
-        })
-        return {
-            data,
-            totalCount,
-            totalPages,
-            currentPage: pageNumber
-        }
-    } catch(error: any) {
-        console.error('Error fetching paginated results from price:', error);
         throw error;
     }
 }
