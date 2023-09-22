@@ -1,5 +1,6 @@
 import Login from "@/components/auth/Login";
 import SignUp from "@/components/auth/SignUp";
+import ForgotPassword from "@/components/auth/forgotPassword";
 import VerifyOtp from "@/components/auth/verifyOtp";
 import Head from "next/head";
 import { useState } from "react";
@@ -11,10 +12,11 @@ const Authentication: React.FC<Props> = () => {
         lastName: "",
         email: "",
         password: "",
+        confirmPassword: "",
         phoneNo: "",
         isNewUser: false,
         verified: true,
-        forgotPassword: true
+        forgotPassword: false
     });
 
     const handleSignup = () => {
@@ -80,47 +82,69 @@ const Authentication: React.FC<Props> = () => {
                         {/* heading for large screens */}
 
                         <div className="hidden sm:w-full sm:flex sm:justify-center text-xs">
-                            <div className="my-4   ">
-                                <span
-                                    className={`transition-all text-xs cursor-pointer ${!form.isNewUser
-                                        ? "text-sm font-bold underline"
-                                        : ""
-                                        }`}
-                                    onClick={() =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            isNewUser: false,
-                                        }))
-                                    }
-                                >
-                                    Login
-                                </span>
-                                <span className="mx-1 text-base">|</span>
+                            <div className="my-4">
+                                {(!form.forgotPassword && form.verified) ? (
+                                    <>
+                                        <span
+                                            className={`transition-all cursor-pointer ${!form.isNewUser
+                                                ? "text-base font-bold underline"
+                                                : "text-xs"
+                                                }`}
+                                            onClick={() =>
+                                                setForm((prev) => ({
+                                                    ...prev,
+                                                    isNewUser: false, forgotPassword: false
+                                                }))
+                                            }
+                                        >
+                                            Log in
+                                        </span>
+                                        <span className="mx-1 text-base">|</span>
 
-                                <span
-                                    className={`transition-all text-xs cursor-pointer ${!form.isNewUser
-                                        ? ""
-                                        : "text-sm font-bold underline"
-                                        }`}
-                                    onClick={() =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            isNewUser: true,
-                                        }))
-                                    }
-                                >
-                                    Sign up
-                                </span>
+                                        <span
+                                            className={`transition-all  cursor-pointer ${!form.isNewUser
+                                                ? "text-xs"
+                                                : "text-base font-bold underline"
+                                                }`}
+                                            onClick={() =>
+                                                setForm((prev) => ({
+                                                    ...prev,
+                                                    isNewUser: true, forgotPassword: false
+                                                }))
+                                            }
+                                        >
+                                            Sign up
+                                        </span>
+                                    </>
+                                ) : (form.verified ? (
+                                    <span
+                                        className='transition-all cursor-pointer text-base font-bold'
+                                    >
+                                        Reset Password
+                                    </span>
+                                ) : (
+                                    <span
+                                        className='transition-all cursor-pointer text-base font-bold'
+                                    >
+                                        Verify OTP
+                                    </span>
+                                )
+
+                                )}
                             </div>
                         </div>
 
                         {/* heading for mobile devices */}
                         <div className="sm:hidden w-full flex justify-center items-center h-8 text-lg font-bold my-2">
-                            {form.isNewUser ? "Sign Up" : "Log in"}
+                            {(form.isNewUser && !form.forgotPassword) && "Sign up"}
+                            {(!form.isNewUser && !form.forgotPassword) && "Log in"}
+                            {(form.forgotPassword && !form.isNewUser) && 'Reset Password'}
+                            {(!form.verified) && 'Verify OTP'}
+
                         </div>
 
                         {/* form section */}
-                        {(form.isNewUser && form.verified) && (
+                        {(form.isNewUser && !form.forgotPassword && form.verified) && (
                             <SignUp
                                 form={form}
                                 setForm={setForm}
@@ -128,7 +152,7 @@ const Authentication: React.FC<Props> = () => {
                                 onChange={onChange}
                             />
                         )}
-                        {(!form.isNewUser && form.verified) && (
+                        {(!form.isNewUser && !form.forgotPassword && form.verified) && (
                             <Login
                                 form={form}
                                 setForm={setForm}
@@ -136,7 +160,14 @@ const Authentication: React.FC<Props> = () => {
                                 onChange={onChange}
                             />
                         )}
-                        {!form.verified && <VerifyOtp setForm={setForm} />}
+                        {(!form.verified) && (<VerifyOtp setForm={setForm} />)}
+                        {(form.forgotPassword) && (
+                            <ForgotPassword
+                                form={form}
+                                setForm={setForm}
+                                onChange={onChange}
+                            />
+                        )}
                     </section>
                 </div>
             </section>

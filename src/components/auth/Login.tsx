@@ -51,27 +51,51 @@ const Login = ({
                     onChange={onChange}
                 />
 
-                <div className="flex mt-8 max-w-xl w-full justify-center border-none sm:absolute sm:left-0 sm:bottom-10">
+                <div className="flex flex-col gap-2 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-3">
                     <input
                         className="cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md"
                         type="submit"
                         value="Log in"
                     />
-                </div>
-                <div className="sm:hidden w-full flex justify-center text-xs">
-                    No account ?
-                    <span
-                        className="ml-1 text-gray-700 underline cursor-pointer"
+                    <div
+                        className="hidden w-full sm:flex sm:justify-center text-xs font-semibold text-gray-900 underline cursor-pointer"
                         onClick={() =>
                             setForm((prev) => ({
                                 ...prev,
-                                isNewUser: true,
+                                forgotPassword: !prev.forgotPassword,
                             }))
                         }
                     >
-                        {!form.isNewUser ? "Sign up" : "Log in"}
-                    </span>
+                        Forgot Password?
+                    </div>
+                    <div className="sm:hidden w-full flex justify-center text-xs">
+                        No account?
+                        <span
+                            className="ml-1 text-gray-900 underline font-semibold cursor-pointer"
+                            onClick={() =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    isNewUser: true,
+                                }))
+                            }
+                        >
+                            Sign up
+                        </span>
+                    </div>
+                    <div
+                        className="sm:hidden w-full flex justify-center text-xs font-semibold text-gray-900 underline cursor-pointer"
+                        onClick={() =>
+                            setForm((prev) => ({
+                                ...prev,
+                                forgotPassword: !prev.forgotPassword,
+                            }))
+                        }
+                    >
+                        Forgot Password?
+                    </div>
                 </div>
+
+
             </form>
         </div>
     );

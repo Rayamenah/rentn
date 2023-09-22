@@ -47,7 +47,7 @@ const Agent = () => {
 
                     <div className="absolute bottom-5 right-5 flex justify-end">
                         <div className="flex flex-col justify-center">
-                            <Link href="/CreateListing">
+                            <Link href="/listing">
                                 <Image
                                     className="m-auto"
                                     src="/Component 11.svg"

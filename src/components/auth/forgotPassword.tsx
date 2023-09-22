@@ -7,7 +7,7 @@ type Props = {
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const Login = ({ form, onChange, setForm }: Props) => {
+const ForgotPassword = ({ form, onChange, setForm }: Props) => {
 
     const handleSubmit = () => {
 
@@ -27,29 +27,28 @@ const Login = ({ form, onChange, setForm }: Props) => {
                     onChange={onChange}
                 />
 
-                <div className='flex mt-8 max-w-xl w-full justify-center border-none sm:absolute sm:left-0 sm:bottom-10'>
+                <div className='flex flex-col gap-2 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-10'>
                     <input
                         className='cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md'
                         type='submit'
-                        value='Log in'
+                        value='Submit'
                     />
-                </div>
-                <div className='sm:hidden w-full flex justify-center text-xs'>Login
-                    <span
-                        className='ml-1 text-gray-700 underline cursor-pointer'
+                    <button
+                        className='m-auto text-xs font-semibold text-gray-700 underline cursor-pointer'
                         onClick={() =>
                             setForm((prev) => ({
                                 ...prev,
-                                isNewUser: false,
+                                forgotPassword: false,
                             }))
                         }
                     >
-                        Log in
-                    </span>
+                        Back to Log in
+                    </button>
                 </div>
+
             </form >
         </div >
     )
 }
 
-export default Login
+export default ForgotPassword
