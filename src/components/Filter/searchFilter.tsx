@@ -20,7 +20,7 @@ type filterType = {
 };
 
 const SearchFilter = ({ className }: SliderProps) => {
-    const [price, setPrice] = useState(340);
+    const [price, setPrice] = useState(350);
     const [community, setCommunity] = useState("iterigbi");
     const [house, setHouse] = useState("Bedsitter");
 
@@ -121,7 +121,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                             value={[price]}
                             min={100}
                             max={1000}
-                            step={1}
+                            step={50}
                             className={cn("w-full", className)}
                             onValueChange={(value: number[]) =>
                                 setPrice(value[0])

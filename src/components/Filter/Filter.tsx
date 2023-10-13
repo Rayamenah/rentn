@@ -19,7 +19,7 @@ type filterType = {
 };
 
 const Filter = ({ className }: SliderProps) => {
-    const [price, setPrice] = useState(340);
+    const [price, setPrice] = useState(350);
     const [community, setCommunity] = useState("iterigbi");
     const [house, setHouse] = useState("Bedsitter");
 
@@ -39,7 +39,7 @@ const Filter = ({ className }: SliderProps) => {
 
     return (
         <div className="border border-black w-[90%] md:flex rounded-lg ">
-            <div className=" w-full md:w-1/4 border border-b-black md:flex md:border  md:border-r-black md:border-b-0 md:flex-col">
+            <div className=" w-full md:w-1/4 border-b-black md:flex  md:border-r-black md:border-b-0 md:flex-col">
                 <div className="m-1 flex gap-2">
                     <img
                         className="w-3"
@@ -79,7 +79,7 @@ const Filter = ({ className }: SliderProps) => {
                     </Select>
                 </div>
             </div>
-            <div className="w-full md:w-1/4 border border-b-black md:flex md:border md:border-r-black md:border-b-0 md:flex-col">
+            <div className="w-full md:w-1/4 border-b-black md:flex md:border-r-black md:border-b-0 md:flex-col">
                 <div className="m-1 flex gap-2">
                     <img
                         className="w-3"
@@ -123,7 +123,7 @@ const Filter = ({ className }: SliderProps) => {
                     <div className="m-1 w-full">
                         <p className="text-xs text-gray-700">
                             Annual rent:{" "}
-                            {price == 1000 ? "1m" : price + "k"}
+                            <b>{price == 1000 ? "1m" : price + "k"}</b>
                         </p>
                     </div>
                     <div className="m-1 text-[10px] flex justify-center gap-2 w-full">
@@ -132,7 +132,7 @@ const Filter = ({ className }: SliderProps) => {
                             value={[price]}
                             min={100}
                             max={1000}
-                            step={1}
+                            step={50}
                             className={cn("w-full", className)}
                             onValueChange={(value: number[]) =>
                                 setPrice(value[0])

@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useState } from "react";
 type Props = {};
 
-const Authentication: React.FC<Props> = () => {
+const Auth: React.FC<Props> = () => {
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -175,4 +175,4 @@ const Authentication: React.FC<Props> = () => {
     );
 };
 
-export default Authentication;
+export default Auth;
