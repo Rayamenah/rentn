@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { TbArrowLeft } from "react-icons/tb";
 
-const Agent = () => {
+const Listing = () => {
     const [formDetails, setFormDetails] =
         useState<listingType>({
             name: "",
@@ -32,7 +32,7 @@ const Agent = () => {
 
     const router = useRouter();
 
-    console.log(formDetails);
+    // console.log(formDetails);
 
     const goBack = () => {
         router.back();
@@ -122,7 +122,7 @@ const Agent = () => {
                 {/* first half shows on larger screen hidden in mobile devices*/}
                 <aside className="relative hidden sm:flex sm:p-5 sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white ">
                     <div className="relative flex h-10 px-2 justify-center items-center">
-                        <div className="absolute left-0 top-2 flex items-center pl-4">
+                        <div className="absolute left-0 top-2 flex items-center">
                             <button onClick={goBack}>
                                 <TbArrowLeft className="w-6 h-6" />
                             </button>
@@ -165,7 +165,7 @@ const Agent = () => {
                                 disabled
                             ></button>
                             <button
-                                className="border p-1 rounded-lg"
+                                className="bg-black text-white border p-1 rounded-lg"
                                 onClick={() => progress()}
                                 disabled={!canNext}
                             >
@@ -181,7 +181,7 @@ const Agent = () => {
                                 <img src="/chevron-right.svg" />
                             </button>
                             <button
-                                className="border p-1 rounded-lg"
+                                className="bg-black text-white border p-1 rounded-lg"
                                 onClick={() => progress()}
                             // disabled={!canNext}
                             >
@@ -214,4 +214,4 @@ const Agent = () => {
     );
 };
 
-export default Agent;
+export default Listing;

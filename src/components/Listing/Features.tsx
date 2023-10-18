@@ -37,10 +37,9 @@ export default function Features({
     setPrice,
     tenure,
 }: Props) {
-    const { bedroom, toilet, guestRoom, parkingSpace } =
-        features.features;
-
+    const { bedroom, toilet, guestRoom, parkingSpace } = features.features;
     // features will have to be changed from boolean to array of strings
+    
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {

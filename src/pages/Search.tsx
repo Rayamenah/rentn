@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link"
 import { useRouter } from "next/router";
 import { SlLocationPin } from "react-icons/sl";
 import { TbArrowLeft } from "react-icons/tb";
@@ -66,7 +67,9 @@ const Search = () => {
                                         fill
                                     />
                                 </div>
-                                <div className="p-1 flex justify-between ">
+                                <Link
+                                    href={`/apartment/${item}`}
+                                    className="p-1 flex justify-between ">
                                     <div>
                                         <p className="text-[0.7rem] sm:text-sm">
                                             Self Contain
@@ -86,7 +89,7 @@ const Search = () => {
                                             per annum
                                         </p>
                                     </div>
-                                </div>
+                                </Link>
                             </section>
                         ))}
                     </div>

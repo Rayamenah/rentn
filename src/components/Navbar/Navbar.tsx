@@ -12,7 +12,7 @@ const Navbar = () => {
             </Link>
             <div className='flex justify-between gap-4 '>
                 <Link
-                    href="apartment"
+                    href="/search"
                     onClick={() => setSelect('rent')}
                     className={`text-xs sm:text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
                 >Rent a house</Link>
