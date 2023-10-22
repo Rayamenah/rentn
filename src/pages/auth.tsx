@@ -1,7 +1,7 @@
 import Login from "@/components/auth/Login";
 import SignUp from "@/components/auth/SignUp";
 import ForgotPassword from "@/components/auth/forgotPassword";
-import VerifyOtp from "@/components/auth/verifyOTP";
+import VerifyOtp from "@/components/auth/verifyOtp";
 import Head from "next/head";
 import { useState } from "react";
 type Props = {};
@@ -52,7 +52,7 @@ const Auth: React.FC<Props> = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
 

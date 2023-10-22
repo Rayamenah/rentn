@@ -29,7 +29,7 @@ const Search = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
             <section className="w-full h-full">
@@ -58,7 +58,7 @@ const Search = () => {
                         {arr.map((item) => (
                             <section
                                 key={item}
-                                className="w-[48%] h-[14rem] xs:w-full sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]"
+                                className="w-[48%] h-[14rem] sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]"
                             >
                                 <div className="w-full h-[70%] relative">
                                     <Image

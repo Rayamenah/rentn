@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 
@@ -20,7 +19,7 @@ const Agent = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
             <section className="relative p-4">

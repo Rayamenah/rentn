@@ -39,7 +39,7 @@ export default function Features({
 }: Props) {
     const { bedroom, toilet, guestRoom, parkingSpace } = features.features;
     // features will have to be changed from boolean to array of strings
-    
+
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -60,46 +60,48 @@ export default function Features({
                     FEATURES OF HOUSE
                 </div>
                 <br />
-                <label>
-                    <input
-                        className="mr-2 text-black"
-                        type="checkbox"
-                        name="bedroom"
-                        checked={bedroom}
-                        onChange={handleChange}
-                    />
-                    Bedroom(s)
-                </label>
-                <label>
-                    <input
-                        className="mr-2 text-black"
-                        type="checkbox"
-                        name="toilet"
-                        checked={toilet}
-                        onChange={handleChange}
-                    />
-                    Toilet
-                </label>
-                <label>
-                    <input
-                        className="mr-2 text-black"
-                        type="checkbox"
-                        name="guestRoom"
-                        checked={guestRoom}
-                        onChange={handleChange}
-                    />
-                    Guest room(s)
-                </label>
-                <label>
-                    <input
-                        className="mr-2 text-black"
-                        type="checkbox"
-                        name="parkingSpace"
-                        checked={parkingSpace}
-                        onChange={handleChange}
-                    />
-                    Parking space
-                </label>
+                <div className='flex flex-col gap-2'>
+                    <label className='text-xs'>
+                        <input
+                            className="mr-2 text-black"
+                            type="checkbox"
+                            name="bedroom"
+                            checked={bedroom}
+                            onChange={handleChange}
+                        />
+                        Bedroom(s)
+                    </label>
+                    <label className='text-xs'>
+                        <input
+                            className="mr-2 text-black"
+                            type="checkbox"
+                            name="toilet"
+                            checked={toilet}
+                            onChange={handleChange}
+                        />
+                        Toilet
+                    </label>
+                    <label className='text-xs'>
+                        <input
+                            className="mr-2 text-black"
+                            type="checkbox"
+                            name="guestRoom"
+                            checked={guestRoom}
+                            onChange={handleChange}
+                        />
+                        Guest room(s)
+                    </label>
+                    <label className='text-xs'>
+                        <input
+                            className="mr-2 text-black"
+                            type="checkbox"
+                            name="parkingSpace"
+                            checked={parkingSpace}
+                            onChange={handleChange}
+                        />
+                        Parking space
+                    </label>
+                </div>
                 <br />
                 <aside>
                     <p className="text-base font-bold">
@@ -107,7 +109,7 @@ export default function Features({
                     </p>
                     <br />
                     <div className="flex justify-between items-center max-w-md">
-                        <p className="text-sm font-semibold">
+                        <p className="text-xs font-semibold">
                             Annual Rent
                         </p>
                         <input
@@ -126,7 +128,7 @@ export default function Features({
                         />
                     </div>
                     <div className="flex justify-between items-center max-w-md">
-                        <p className="text-sm font-semibold">Tenure</p>
+                        <p className="text-xs font-semibold">Tenure</p>
                         <input
                             className="max-w-[7rem] w-[7rem] h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none"
                             type="number"
@@ -144,6 +146,6 @@ export default function Features({
                     </div>
                 </aside>
             </section>
-        </section>
+        </section >
     );
 }

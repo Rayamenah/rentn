@@ -38,8 +38,8 @@ const Filter = ({ className }: SliderProps) => {
     // console.log(filter)
 
     return (
-        <div className="border border-black w-[90%] md:flex rounded-lg ">
-            <div className=" w-full md:w-1/4 border-b-black md:flex  md:border-r-black md:border-b-0 md:flex-col">
+        <div className="border border-gray-400 w-[90%] md:flex rounded-lg ">
+            <div className=" w-full md:w-1/4 border border-b-gray-400 md:flex  md:border-r-gray-400 md:border-b-0 md:flex-col">
                 <div className="m-1 flex gap-2">
                     <img
                         className="w-3"
@@ -79,7 +79,7 @@ const Filter = ({ className }: SliderProps) => {
                     </Select>
                 </div>
             </div>
-            <div className="w-full md:w-1/4 border-b-black md:flex md:border-r-black md:border-b-0 md:flex-col">
+            <div className="w-full md:w-1/4 border border-b-gray-400 md:flex md:border-r-gray-400 md:border-b-0 md:flex-col">
                 <div className="m-1 flex gap-2">
                     <img
                         className="w-3"
@@ -119,7 +119,7 @@ const Filter = ({ className }: SliderProps) => {
                 </div>
             </div>
             <div className="flex-1 lg:flex">
-                <div className="p-2 lg:w-3/4 flex flex-col items-center justify-center border-b-black md:flex md:border-b-0 md:flex-col">
+                <div className="p-2 lg:w-3/4 flex flex-col items-center justify-center border border-b-gray-400 md:flex md:border-b-0 md:flex-col">
                     <div className="m-1 w-full">
                         <p className="text-xs text-gray-700">
                             Annual rent:{" "}
@@ -142,7 +142,7 @@ const Filter = ({ className }: SliderProps) => {
                     </div>
                 </div>
                 <div className="flex p-2 flex-1 justify-center items-center">
-                    <button className="h-full p-2 w-1/2 lg:w-full lg:p-0 bg-gray-500 rounded-lg text-sm text-gray-700">
+                    <button className="h-full p-2 w-full lg:w-full lg:p-0 bg-gray-500 rounded-lg text-sm text-gray-900">
                         Search
                     </button>
                 </div>

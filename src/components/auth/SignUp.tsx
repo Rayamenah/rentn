@@ -87,19 +87,19 @@ const SignUp = ({
                         htmlFor="password"
                         className="text-xs font-semibold"
                     >
-                        CONFIRM PASSWORDD
+                        CONFIRM PASSWORD
                     </label>
                     <input
                         className="max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none"
                         type="password"
-                        name="password"
+                        name="confirmPassword"
                         placeholder="Enter your password"
                         required
                         value={form.confirmPassword}
                         onChange={onChange}
                     />
                 </>
-                <div className="absolute left-0 bottom-10 flex flex-col gap-1 mt-8 max-w-xl w-full items-center border-none ">
+                <div className="absolute left-0 bottom-14 flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none ">
                     <input
                         className="cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md "
                         type="submit"

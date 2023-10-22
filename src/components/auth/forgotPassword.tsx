@@ -27,7 +27,7 @@ const ForgotPassword = ({ form, onChange, setForm }: Props) => {
                     onChange={onChange}
                 />
 
-                <div className='flex flex-col gap-2 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-10'>
+                <div className='flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-14'>
                     <input
                         className='cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md'
                         type='submit'
