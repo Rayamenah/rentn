@@ -4,13 +4,24 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("rentn_render")
+  url      = env("DATABASE_URL")
 }
 
 enum ROLE {
   agent
   user
   admin
+}
+
+model Image {
+  imageId      String     @id @default(uuid())
+  cloudinaryId String
+  imageUrl     String
+  fileName     String
+  Apartment    Apartment? @relation(fields: [apartmentId], references: [id])
+  apartmentId  String?
+  uploadBy     String
+  createdAt     DateTime      @default(now()) @db.Timestamptz()
 }
 
 model Rentn {
@@ -86,7 +97,7 @@ model Apartment {
   updatedAt     DateTime      @updatedAt @db.Timestamptz()
   price         Decimal       @default(0.00) @db.Decimal(10, 2)
   tenure        Int           @default(0)
-  images        String[]
+  images        Image[]
 
   @@unique([id, apartmentType])
   @@index([id])
