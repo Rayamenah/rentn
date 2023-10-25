@@ -52,7 +52,7 @@ const Auth: React.FC<Props> = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
 

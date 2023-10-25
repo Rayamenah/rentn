@@ -10,18 +10,17 @@ const Navbar = () => {
                 className='font-bold text-xl'>
                 rent'n
             </Link>
-            <div className='flex justify-between gap-4 '>
-                <Link
-                    href="/search"
-                    onClick={() => setSelect('rent')}
-                    className={`text-xs sm:text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
-                >Rent a house</Link>
-                <Link
-                    href="/agent"
-                    onClick={() => setSelect('agent')}
-                    className={`text-xs sm:text-sm ${select === 'agent' ? 'underline font-semibold' : ''}`}
-                >Agent</Link>
-            </div>
+            <Link
+                href="/"
+                //TODO: rent a house is supposed to randomly fetch a list of apartments for you with different locations. So for now, it just return the index page
+                onClick={() => setSelect('rent')}
+                className={`text-xs sm:text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
+            >Rent a house</Link>
+            <Link
+                href="/agent"
+                onClick={() => setSelect('agent')}
+                className={`text-xs sm:text-sm ${select === 'agent' ? 'underline font-semibold' : ''}`}
+            >Agent</Link>
         </nav>
     )
 }

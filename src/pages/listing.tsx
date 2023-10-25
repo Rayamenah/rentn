@@ -115,12 +115,12 @@ const Listing = () => {
                 <title>rentn house listing</title>
                 <meta name="description" content="create a new house listing" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/rentnLogo.svg" />
             </Head>
-            <section className="flex-grow sm:flex">
+            <section className="relative flex-grow sm:flex">
 
                 {/* first half shows on larger screen hidden in mobile devices*/}
-                <aside className="relative hidden sm:flex sm:p-5 sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white ">
+                <aside className="hidden sm:flex sm:p-5 sm:flex-col sm:w-[45%] sm:gap-10 bg-black text-white ">
                     <div className="relative flex h-10 px-2 justify-center items-center">
                         <div className="absolute left-0 top-2 flex items-center">
                             <button onClick={goBack}>
@@ -137,7 +137,7 @@ const Listing = () => {
                 </aside>
 
 
-                <aside className="h-full flex flex-col gap-y-3 sm:w-[60%]">
+                <aside className="relative h-full flex flex-col gap-y-3 sm:w-[60%]">
                     <div className="flex h-10 px-2 justify-center items-center sm:hidden">
                         <div className="hidden sm:w-1/3 sm:flex sm:items-center sm:pl-4">
                             <button onClick={goBack}>
@@ -153,61 +153,62 @@ const Listing = () => {
                     <MobileProgressBar nextModal={nextModal} progressBar={progressBar} />
 
                     {/* Modal Contents */}
-                    <section className="flex-grow">
+                    <section className="">
                         {modalContents[nextModal].modal}
                     </section>
 
                     {/* navigation button */}
-                    {nextModal == 0 ? (
-                        <div className="flex justify-around p-4">
-                            <button
-                                className="p-1 rounded-lg"
-                                disabled
-                            ></button>
-                            <button
-                                className="bg-black text-white border p-1 rounded-lg"
-                                onClick={() => progress()}
-                                disabled={!canNext}
-                            >
-                                Next
-                            </button>
-                        </div>
-                    ) : nextModal == 1 ? (
-                        <div className="flex justify-around p-4">
-                            <button
-                                onClick={regress}
-                                className="border border-black w-10 rounded-lg"
-                            >
-                                <img src="/chevron-right.svg" />
-                            </button>
-                            <button
-                                className="bg-black text-white border p-1 rounded-lg"
-                                onClick={() => progress()}
-                            // disabled={!canNext}
-                            >
-                                Next
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="flex justify-around p-4">
-                            <button
-                                onClick={regress}
-                                className="border border-black w-10 rounded-lg"
-                            >
-                                <img src="/chevron-right.svg" />
-                            </button>
-
-                            {nextModal == 2 && (
+                    <div className='absolute left-0 bottom-14 w-full'>
+                        {nextModal == 0 ? (
+                            <div className="flex justify-around p-4">
                                 <button
-                                    className="border bg-black text-white p-1 rounded-lg"
-                                    onClick={() => submitListing}
-                                // disabled={!canNext}
+                                    className="p-1 rounded-lg"
+                                    disabled
+                                />
+                                <button
+                                    className="bg-black text-white border p-1 rounded-lg"
+                                    onClick={() => progress()}
+                                    disabled={!canNext}
                                 >
-                                    Create listing
+                                    Next
                                 </button>
-                            )}
-                        </div>
-                    )}
+                            </div>
+                        ) : nextModal == 1 ? (
+                            <div className="flex justify-around p-4">
+                                <button
+                                    onClick={regress}
+                                    className="border border-black w-10 rounded-lg"
+                                >
+                                    <img src="/chevron-right.svg" />
+                                </button>
+                                <button
+                                    className="bg-black text-white border p-1 rounded-lg"
+                                    onClick={() => progress()}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex justify-around p-4">
+                                <button
+                                    onClick={regress}
+                                    className="border border-black w-10 rounded-lg"
+                                >
+                                    <img src="/chevron-right.svg" />
+                                </button>
+
+                                {nextModal == 2 && (
+                                    <button
+                                        className="border bg-black text-white p-1 rounded-lg"
+                                        onClick={() => submitListing}
+                                    // disabled={!canNext}
+                                    >
+                                        Create listing
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </aside>
             </section>
         </>

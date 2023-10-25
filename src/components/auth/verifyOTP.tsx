@@ -78,7 +78,7 @@ const VerifyOtp = ({ setForm }: Props) => {
 
                     ))}
                 </div>
-                <div className="flex mt-8 max-w-xl w-full justify-center border-none sm:absolute sm:left-0 sm:bottom-10">
+                <div className="flex mt-8 max-w-xl w-full justify-center border-none sm:absolute sm:left-0 sm:bottom-14">
                     <input
                         className="cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md"
                         type="submit"
