@@ -27,6 +27,9 @@ export default async function handler(
         const findAgent = await prisma.agent.findUnique({
             where: {
                 email: email
+            },
+            include: {
+                apartments: true
             }
         })
         if(!findAgent){
@@ -57,7 +60,8 @@ export default async function handler(
                 }
             },
             include: {
-                agent: true
+                agent: true,
+                images: true
             },
             orderBy: {
                 createdAt: 'asc'

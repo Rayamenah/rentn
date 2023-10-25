@@ -3,6 +3,7 @@ import { ApartmentDto } from "dto/agent.dto.interface";
 import { ApiResponseDto } from "dto/apiResponseDto";
 import { Secret, verify } from "jsonwebtoken";
 import { addNewApartment } from "lib/check.db";
+import { FormidableError, handleUpload, parseImageForm } from "lib/image.helper";
 import { apartmentSchemaValidation } from "lib/schema.validator";
 import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler (
@@ -39,6 +40,9 @@ export default async function handler (
                 message: "sorry, you're not allowed to access this route. contact support",
             })
         }
+        const {files, fields} = await parseImageForm(req)
+        console.log(files, fields)
+        const uploadToCloudinary = await handleUpload(files.media)
         const validateApartmentSchema = apartmentSchemaValidation(req.body)
         if(validateApartmentSchema){
             return res.status(400).send({
@@ -53,6 +57,9 @@ export default async function handler (
         });
         const newApartment: ApartmentDto = req.body;
         await addNewApartment(newApartment.address, newApartment.community)
+        const cloudinaryId = uploadToCloudinary.imageId
+        const fileName = files.fileName
+        const imageUrl = uploadToCloudinary.imageUrl
         const createNewApartment = await prisma.apartment.create({
             data: {
                 address: newApartment.address,
@@ -68,7 +75,15 @@ export default async function handler (
                 price: newApartment.price,
                 tenure: newApartment.tenure,
                 description: newApartment.description,
-                images: newApartment.images,
+            }
+        })
+        const saveImageInfoToDb = await prisma.image.create({
+            data: {
+                cloudinaryId: cloudinaryId,
+                fileName: `$fileName`,
+                uploadBy: findAgent.firstName&&findAgent.lastName,
+                imageUrl: imageUrl,
+               apartmentId: createNewApartment.id
             }
         })
         const apartmentResponse: ApiResponseDto = {
@@ -81,8 +96,14 @@ export default async function handler (
         res.status(200).send(apartmentResponse)
     } catch (error: any) {
         console.error(error);
-        res.status(500).json({
-          message: "Internal server error",
-        });
+        if(error instanceof FormidableError){
+            res.status(400).json({
+                error: error.message,
+                message: "file parse server error",
+            });
+        }
+        res.status(500).send({
+            message: 'server currently unavailable'
+        })
     }
 }
