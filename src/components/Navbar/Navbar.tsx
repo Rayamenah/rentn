@@ -11,7 +11,8 @@ const Navbar = () => {
                 rent'n
             </Link>
             <Link
-                href="/search"
+                href="/"
+                //TODO: rent a house is supposed to randomly fetch a list of apartments for you with different locations. So for now, it just return the index page
                 onClick={() => setSelect('rent')}
                 className={`text-xs sm:text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
             >Rent a house</Link>
