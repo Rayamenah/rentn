@@ -20,7 +20,7 @@ type filterType = {
 };
 
 const SearchFilter = ({ className }: SliderProps) => {
-    const [price, setPrice] = useState(340);
+    const [price, setPrice] = useState(350);
     const [community, setCommunity] = useState("iterigbi");
     const [house, setHouse] = useState("Bedsitter");
 
@@ -31,8 +31,8 @@ const SearchFilter = ({ className }: SliderProps) => {
     // console.log(filter)
 
     return (
-        <section className="border w-[90%] rounded-lg ">
-            <div className=" w-full border ">
+        <section className="border border-gray-400 w-[90%] rounded-lg ">
+            <div className=" w-full  border border-b-gray-400 ">
                 <div className="m-1 flex gap-2">
                     <SlLocationPin className="w-3 " />
                     <p className="text-xs text-gray-700">
@@ -41,6 +41,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
+                        value={community}
                         name="community"
                         onValueChange={(item) => setCommunity(item)}
                     >
@@ -68,7 +69,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                     </Select>
                 </div>
             </div>
-            <div className="w-full border">
+            <div className="w-full border border-b-gray-400">
                 <div className="m-1 flex gap-2">
                     <img
                         className="w-3"
@@ -80,7 +81,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                 </div>
                 <div className="m-1 flex justify-center">
                     <Select
-                        // value={house}
+                        value={house}
                         name="houseType"
                         onValueChange={(item) => setHouse(item)}
                     >
@@ -108,7 +109,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                 </div>
             </div>
             <div className="flex-1">
-                <div className="p-2  flex flex-col items-center justify-center border-b-black">
+                <div className="p-2 border flex flex-col items-center justify-center border-b-gray-400">
                     <div className="m-1 w-full">
                         <p className="text-xs text-gray-700">
                             Annual rent:{" "}
@@ -121,7 +122,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                             value={[price]}
                             min={100}
                             max={1000}
-                            step={1}
+                            step={50}
                             className={cn("w-full", className)}
                             onValueChange={(value: number[]) =>
                                 setPrice(value[0])
@@ -131,7 +132,7 @@ const SearchFilter = ({ className }: SliderProps) => {
                     </div>
                 </div>
                 <div className="flex p-2 flex-1 justify-center items-center">
-                    <button className="h-full p-2 w-1/2  bg-gray-500 rounded-lg text-sm text-gray-700">
+                    <button className="h-full p-2 w-full bg-gray-500 rounded-lg text-sm text-gray-900">
                         Search
                     </button>
                 </div>

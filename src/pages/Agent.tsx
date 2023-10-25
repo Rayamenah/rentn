@@ -1,8 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
+
 
 const Agent = () => {
+    const router = useRouter()
     return (
         <>
             <Head>
@@ -17,7 +19,7 @@ const Agent = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
             <section className="relative p-4">
@@ -46,21 +48,20 @@ const Agent = () => {
                     </div>
 
                     <div className="absolute bottom-5 right-5 flex justify-end">
-                        <div className="flex flex-col justify-center">
-                            <Link href="/listing">
-                                <Image
-                                    className="m-auto"
-                                    src="/Component 11.svg"
-                                    alt="listing"
-                                    width={30}
-                                    height={30}
-                                />
-                            </Link>
-
+                        <button
+                            onClick={() => router.push("/listing")}
+                            className="flex flex-col justify-center">
+                            <Image
+                                className="m-auto"
+                                src="/Component 11.svg"
+                                alt="listing"
+                                width={30}
+                                height={30}
+                            />
                             <p className="text-xs font-semibold">
                                 Add new listing
                             </p>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </section>

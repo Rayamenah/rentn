@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link"
 import { useRouter } from "next/router";
 import { SlLocationPin } from "react-icons/sl";
 import { TbArrowLeft } from "react-icons/tb";
@@ -28,7 +29,7 @@ const Search = () => {
                 />
                 <link
                     rel="icon"
-                    href="/favicon.ico"
+                    href="/rentnLogo.svg"
                 />
             </Head>
             <section className="w-full h-full">
@@ -57,7 +58,7 @@ const Search = () => {
                         {arr.map((item) => (
                             <section
                                 key={item}
-                                className="w-[48%] h-[14rem] xs:w-full sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]"
+                                className="w-[48%] h-[14rem] sm:w-1/2 sm:h-[13rem] box-border border rounded-lg md:w-[30%]"
                             >
                                 <div className="w-full h-[70%] relative">
                                     <Image
@@ -66,7 +67,9 @@ const Search = () => {
                                         fill
                                     />
                                 </div>
-                                <div className="p-1 flex justify-between ">
+                                <Link
+                                    href={`/apartment/${item}`}
+                                    className="p-1 flex justify-between ">
                                     <div>
                                         <p className="text-[0.7rem] sm:text-sm">
                                             Self Contain
@@ -86,7 +89,7 @@ const Search = () => {
                                             per annum
                                         </p>
                                     </div>
-                                </div>
+                                </Link>
                             </section>
                         ))}
                     </div>
