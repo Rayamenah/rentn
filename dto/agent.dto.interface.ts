@@ -38,7 +38,6 @@ export interface ApartmentDto {
     features: string[]
     price: string;
     description: string;
-    images?: string;
     tenure: number
 }
 
