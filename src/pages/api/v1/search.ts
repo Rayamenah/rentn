@@ -24,7 +24,7 @@ export default async function handler(
             });
         }
         const totalCount = await prisma.apartment.count()
-        const totalPages = Math.ceil(totalCount/pageSize)
+        const totalPages = Math.ceil(totalCount / pageSize)
         const offset = (parsedPageNumber - 1) * pageSize
 
         if (offset >= totalCount) {
@@ -50,7 +50,7 @@ export default async function handler(
             currentPage: pageNumber,
             message: 'request was successful'
         })
-    }catch(error: any) {
+    } catch (error: any) {
         console.log(error)
         console.log(error.message)
         return res.status(500).send({

@@ -1,7 +1,7 @@
-import {  z as zod } from 'zod';
+import { z as zod } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 
-export function agentSchemaValidation(data: {}){
+export function agentSchemaValidation(data: {}) {
     const agentSignupValidation = zod.object({
         firstName: zod
             .string()
@@ -30,10 +30,10 @@ export function agentSchemaValidation(data: {}){
             .nonempty('password must be set by the user')
             .trim(),
     })
-    try{
+    try {
         agentSignupValidation.parse(data)
-    } catch(err: any) {
-        console.log('agent validation error::',err)
+    } catch (err: any) {
+        console.log('agent validation error::', err)
         return fromZodError(err).message
     }
 }
@@ -42,14 +42,14 @@ export function userValidationSchema(data: any) {
     const userLoginSchema = zod.object({
         email: zod
             .string()
-            .nonempty({message: 'email is required to login'})
+            .nonempty({ message: 'email is required to login' })
             .email()
             .trim(),
         password: zod
             .string()
             .min(1, "Password must be 8 or more characters")
             .max(16, "Password is too long")
-            .nonempty({message: 'password is required to login'})
+            .nonempty({ message: 'password is required to login' })
             .trim(),
     })
     try {
@@ -63,14 +63,14 @@ export function agentLoginSchema(data: any) {
     const agentLoginValidator = zod.object({
         email: zod
             .string()
-            .nonempty({message: 'email is required to login'})
+            .nonempty({ message: 'email is required to login' })
             .email()
             .trim(),
         password: zod
             .string()
             .min(1, "Password must be 8 or more characters")
             .max(16, "Password is too long")
-            .nonempty({message: 'password is required to login'})
+            .nonempty({ message: 'password is required to login' })
             .trim(),
     })
     try {
@@ -80,7 +80,7 @@ export function agentLoginSchema(data: any) {
     }
 }
 
-export function userSchemaValidation(data: any){
+export function userSchemaValidation(data: any) {
     const userSignUpValidation = zod.object({
         email: zod
             .string()
@@ -97,25 +97,25 @@ export function userSchemaValidation(data: any){
             .string()
             .min(8, { message: 'Password must be at least 8 characters long' })
             .regex(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-              {
-                message:
-                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
-              },
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                {
+                    message:
+                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
+                },
             )
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
             .trim(),
     })
-    try{
+    try {
         userSignUpValidation.parse(data)
-    } catch (err: any){
-        console.log('user validation error:::',err)
+    } catch (err: any) {
+        console.log('user validation error:::', err)
         return fromZodError(err).message
     }
 }
 
-export function adminSchemaValidation(data: {}){
+export function adminSchemaValidation(data: {}) {
     const adminSchema = zod.object({
         firstName: zod
             .string()
@@ -125,17 +125,17 @@ export function adminSchemaValidation(data: {}){
         lastName: zod
             .string()
             .nonempty('last name must not be empty')
-            .max(8, {message: 'first name is too long'})
+            .max(8, { message: 'first name is too long' })
             .trim(),
         password: zod
             .string()
             .min(8, { message: 'Password must be at least 8 characters long' })
             .regex(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-              {
-                message:
-                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
-              },
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                {
+                    message:
+                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol',
+                },
             )
             .max(16, 'password is too long')
             .nonempty('password must be set by the user')
@@ -156,16 +156,16 @@ export function adminSchemaValidation(data: {}){
             .min(7, 'address too short, kindly make it more descriptive')
             .trim(),
     })
-    try{
+    try {
         adminSchema.parse(data)
-    } catch(err: any){
+    } catch (err: any) {
         console.log('admin validation error:::', err)
         return fromZodError(err).message
     }
 }
 
 // TODO: custom check for photo duplicates with hashes and check if it's already stored in the database
-export function apartmentSchemaValidation(data: {}){
+export function apartmentSchemaValidation(data: {}) {
     const apartmentValidation = zod.object({
         description: zod
             .string()
@@ -199,15 +199,15 @@ export function apartmentSchemaValidation(data: {}){
             .string()
             .array(),
     })
-    try{
+    try {
         apartmentValidation.parse(data)
-    }catch(err: any){
+    } catch (err: any) {
         console.log('apartment validation error::::', err)
         return fromZodError(err).message
     }
 }
 
-export function priceSchemaValidation(data: {}){
+export function priceSchemaValidation(data: {}) {
     const priceSchema = zod.object({
         price: zod
             .number()
@@ -215,11 +215,11 @@ export function priceSchemaValidation(data: {}){
         tenure: zod
             .number()
             .min(1, 'not less than 1')
-            .nonnegative(),        
+            .nonnegative(),
     })
-    try{
+    try {
         priceSchema.parse(data)
-    } catch(err: any){
+    } catch (err: any) {
         console.log(err)
         return fromZodError(err).message
     }
@@ -231,7 +231,7 @@ export function priceSchemaValidation(data: {}){
 // TODO: fix eslint for lints
 
 export function rentnSchemaValidator(data: {}) {
-    
+
     const signUpValidation = zod.object({
         email: zod
             .string()
@@ -239,7 +239,7 @@ export function rentnSchemaValidator(data: {}) {
             .email('please input a valid email address')
             // .refine((value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), 'please use a valid email address')
             .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
-        
+
         password: zod
             .string()
             .min(8, { message: 'Password must be at least 8 characters long' })
@@ -265,7 +265,7 @@ export function OtpZodError(data: {}) {
             .email('please input a valid email address')
             // .refine((value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), 'please use a valid email address')
             .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
-        
+
         otp: zod
             .string()
             .nonempty('otp must not be empty')
@@ -287,14 +287,14 @@ export function RentnLoginValidationBody(data: any) {
     const loginValidator = zod.object({
         email: zod
             .string()
-            .nonempty({message: 'email is required to login'})
+            .nonempty({ message: 'email is required to login' })
             .email()
             .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'please use a valid email address'),
         password: zod
             .string()
             .min(1, "Password must be 8 or more characters")
             .max(16, "Password is too long")
-            .nonempty({message: 'password is required to login'})
+            .nonempty({ message: 'password is required to login' })
             .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, 'password must contain uppercase, lowercase, digit, and special character')
             .trim(),
     })
@@ -305,11 +305,11 @@ export function RentnLoginValidationBody(data: any) {
     }
 }
 
-export function SearchHouseSchema(data: any){
+export function SearchHouseSchema(data: any) {
     const searchHouse = zod.array(zod.string())
-    try{
+    try {
         searchHouse.parse(data)
-    } catch(error: any) {
+    } catch (error: any) {
         return fromZodError(error).message
     }
 }

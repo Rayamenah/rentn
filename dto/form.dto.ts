@@ -1,12 +1,6 @@
-export interface signUpType {
+export interface authType {
     isNewUser: boolean,
     verified: boolean;
-    firstName: string;
-    lastName: string;
-    phoneNo: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
     forgotPassword: boolean;
 }
 

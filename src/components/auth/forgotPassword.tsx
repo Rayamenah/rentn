@@ -1,17 +1,46 @@
-import { signUpType } from "dto/form.dto";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { authType } from "dto/form.dto";
 import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "../ui/use-toast";
 
 type Props = {
-    form: signUpType
-    setForm: Dispatch<SetStateAction<signUpType>>;
-    onChange: React.ChangeEventHandler<HTMLInputElement>
+    setForm: Dispatch<SetStateAction<authType>>;
 }
 
-const ForgotPassword = ({ form, onChange, setForm }: Props) => {
+const ForgotPassword = ({ setForm }: Props) => {
+    const [email, setEmail] = useState("")
 
-    const handleSubmit = () => {
 
-    }
+    const mutation = useMutation({
+        mutationFn: async () => {
+            const res = await axios.post("/api/v1/auth/forgot-password", { email: email })
+            const data = res.data
+            return data
+        }
+    })
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            mutation.mutate()
+            if (mutation.isSuccess) {
+                toast({
+                    title: "otp sent",
+                    description: "check your email for your otp"
+                })
+                setEmail("")
+                setForm(prev => ({ ...prev, email: "", forgotPassword: false, verified: false }))
+            }
+        } catch (err) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh something went wrong.",
+                description: mutation.error?.message
+            })
+            return mutation.error?.message
+        }
+    };
     return (
         <div className='w-full px-4 sm:flex sm:justify-center'>
             <form className='relative w-full h-[70vh] max-w-xl flex flex-col gap-5'
@@ -23,8 +52,8 @@ const ForgotPassword = ({ form, onChange, setForm }: Props) => {
                     name='email'
                     placeholder='Enter your email address'
                     required
-                    value={form.email}
-                    onChange={onChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
 
                 <div className='flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-14'>

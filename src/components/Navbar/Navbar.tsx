@@ -11,12 +11,12 @@ const Navbar = () => {
                 rent'n
             </Link>
             <Link
-                href="/search"
+                href='/search'
                 onClick={() => setSelect('rent')}
                 className={`text-xs sm:text-sm ${select === 'rent' ? 'underline font-semibold ' : ''}`}
             >Rent a house</Link>
             <Link
-                href="/agent"
+                href='/agent'
                 onClick={() => setSelect('agent')}
                 className={`text-xs sm:text-sm ${select === 'agent' ? 'underline font-semibold' : ''}`}
             >Agent</Link>

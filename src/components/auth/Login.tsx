@@ -1,19 +1,59 @@
-import { signUpType } from "dto/form.dto";
-import { Dispatch, SetStateAction } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { authType } from "dto/form.dto";
+import { Dispatch, SetStateAction, useState } from "react";
+import { useToast } from "../ui/use-toast";
 
 type Props = {
-    form: signUpType;
-    setForm: Dispatch<SetStateAction<signUpType>>;
-    handleLogin: () => void;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    setForm: Dispatch<SetStateAction<authType>>;
 };
 
-const Login = ({
-    form,
-    handleLogin,
-    onChange,
-    setForm,
-}: Props) => {
+const Login = ({ setForm }: Props) => {
+    const [login, setLogin] = useState({
+        email: "",
+        password: ""
+    })
+    const { toast } = useToast()
+
+    const onChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        //update form state
+        setLogin((prev) => ({
+            ...prev,
+            [event.target.name]: event.target.value,
+        }));
+    };
+
+    const mutation = useMutation({
+        mutationFn: async () => {
+            const res = await axios.post("/api/v1/auth/login", { email: login.email, password: login.password })
+            const data = res.data
+            return data
+        }
+    })
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            mutation.mutate()
+            if (mutation.isSuccess) {
+                toast({
+                    title: "Signed in",
+                })
+                setLogin(prev => ({ ...prev, email: "", password: "" }))
+
+            }
+        } catch (err) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh something went wrong.",
+                description: mutation.error?.message
+            })
+            return mutation.error?.message
+        }
+
+    };
+
     return (
         <div className="w-full px-4 sm:flex sm:justify-center">
             <form
@@ -32,7 +72,7 @@ const Login = ({
                     name="email"
                     placeholder="Enter your email address"
                     required
-                    value={form.email}
+                    value={login.email}
                     onChange={onChange}
                 />
                 <label
@@ -47,16 +87,17 @@ const Login = ({
                     name="password"
                     placeholder="Enter your password"
                     required
-                    value={form.password}
+                    value={login.password}
                     onChange={onChange}
                 />
 
                 <div className="flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-5">
-                    <input
-                        className="cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md"
+                    <button
+                        className="cursor-pointer flex justify-center items-center max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md"
                         type="submit"
-                        value="Log in"
-                    />
+                    >
+                        {mutation.isPending ? <div className='w-5 h-5 border-white bg-black border rounded-full animate-spin' /> : "Log in"}
+                    </button>
                     <div
                         className="hidden w-full sm:flex sm:justify-center text-xs font-semibold text-gray-900 underline cursor-pointer"
                         onClick={() =>

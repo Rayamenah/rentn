@@ -1,16 +1,13 @@
 import { prisma } from "config/prisma.connect";
 import { ApiResponseDto } from "dto/apiResponseDto";
 import { ResetDto } from "dto/rentn.dto";
+import RentnResetPasswordProfile from "emails/templates/passwordReset";
+import hashString from 'lib/hash.password.helper';
 import { NextApiRequest, NextApiResponse } from "next";
 import { Resend } from "resend";
-import hashString from 'lib/hash.password.helper';
 import speakeasy from 'speakeasy';
-import RentnResetPasswordProfile from "emails/templates/passwordReset";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const resetUserDetails: ResetDto = req.body
 
@@ -33,11 +30,11 @@ export default async function handler(
                 email: true,
             }
         })
-        if(isUserExist === undefined || !isUserExist) {
+        if (isUserExist === undefined || !isUserExist) {
             res.status(404).send({
                 message: `sorry, this email ${resetUserDetails.email} does not exist or is not available`
             })
-        }else{
+        } else {
             const verifyOtp = speakeasy.time.verify({
                 secret: isUserExist?.secret,
                 encoding: 'base32',
@@ -48,13 +45,13 @@ export default async function handler(
                 window: 1,
             })
 
-            if(verifyOtp) {
+            if (verifyOtp) {
                 const updateAgentPassword = await prisma.rentn.update({
                     where: {
                         email: resetUserDetails.email
                     },
                     data: {
-                       password: await hashString(resetUserDetails.password)
+                        password: await hashString(resetUserDetails.password)
                     }
                 })
                 const emailContent = RentnResetPasswordProfile()
@@ -74,7 +71,7 @@ export default async function handler(
                 return res.status(200).json(updatePasswordResponse);
             }
         }
-    } catch(error: any) {
+    } catch (error: any) {
         console.log(error)
         console.log(error.message)
         return res.status(500).send({

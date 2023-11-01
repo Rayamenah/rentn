@@ -1,4 +1,6 @@
-import { signUpType } from "dto/form.dto";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { authType } from "dto/form.dto";
 import {
     ChangeEvent,
     Dispatch,
@@ -6,14 +8,17 @@ import {
     useRef,
     useState,
 } from "react";
+import { toast } from "../ui/use-toast";
 
 type Props = {
-    setForm: Dispatch<SetStateAction<signUpType>>;
+    setForm: Dispatch<SetStateAction<authType>>;
 };
 
 const VerifyOtp = ({ setForm }: Props) => {
-    const [otp, setOtp] = useState(['', '', '', '']);
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const inputRefs = [
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
@@ -37,15 +42,36 @@ const VerifyOtp = ({ setForm }: Props) => {
         }
     };
 
-    // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    //     if (e.key === 'Backspace' && index < 0) { inputRefs[index - 1].current?.focus }
 
-    // }
+    const mutation = useMutation({
+        mutationFn: async () => {
+            const otpValue = otp.join('')
+            const res = await axios.post("/api/v1/auth/verify", { email: "email that will has been saved to state", otp: otpValue })
+            const data = res.data
+            return data
+        }
+    })
 
-    // console.log(inputRefs[0])
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            mutation.mutate()
+            if (mutation.isSuccess) {
+                toast({
+                    title: "email verified",
+                })
+                setForm(prev => ({ ...prev, verified: true }))
+            }
+        } catch (err) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh something went wrong.",
+                description: mutation.error?.message
+            })
+            return mutation.error?.message
+        }
 
-    const handleSubmit = () => {
-        const otpValue = otp.join('')
+
     };
 
     return (
