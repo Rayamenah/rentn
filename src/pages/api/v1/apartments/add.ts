@@ -34,7 +34,7 @@ export default async function handler (
                 message: "sorry, profile not found in the database or the agent does not exist",
             })
         }
-        if(findAgent?.role !== 'agent'){
+        if(findAgent?.role || role !== 'agent'){
             return res.status(404).send({
                 message: "sorry, you're not allowed to access this route. contact support",
             })
@@ -45,8 +45,7 @@ export default async function handler (
                 message: 'the req body sent is not correct or acceptable',
                 data: validateApartmentSchema
         })}
-        const dateTime = new Date()
-        const exactTimeDate = dateTime.toLocaleString('en-US', {
+        const dateTime = new Date().toLocaleString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
             hour12: true,
@@ -77,7 +76,7 @@ export default async function handler (
             data: createNewApartment,
             message: 'you have successfully added an apartment for listing',
             url: req.url,
-            date: exactTimeDate,
+            date: dateTime,
         }
         res.status(200).send(apartmentResponse)
     } catch (error: any) {

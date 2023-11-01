@@ -132,7 +132,7 @@ const Location = ({ form, setForm }: Props) => {
                     className="max-w-xl h-8 p-1 text-xs border-b border-b-black placeholder:text-xs placeholder:ml-1 focus:outline-none"
                     type="text"
                     name="address"
-                    placeholder="No 12 Kings way Ugbomro road"
+                    placeholder="descriptive address to your building"
                     required
                     value={form.address}
                     onChange={onChange}
