@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
@@ -21,21 +23,24 @@ type filterType = {
 const Filter = ({ className }: SliderProps) => {
     const [price, setPrice] = useState(350);
     const [community, setCommunity] = useState("iterigbi");
-    const [house, setHouse] = useState("Bedsitter");
+    const [apartmentType, setApartmentType] = useState("Bedsitter");
 
-    // const [filter, setFilter] = useState<filterType>({
-    //     community: 'iterigbi',
-    //     houseType: 'bedsitter',
-    // })
+    const mutation = useMutation({
+        mutationFn: async () => {
+            const res = await axios.get(`/api/v1/search/?community=${community}&apartmentType=${apartmentType}&price=${price}&page=${1}`)
+            const data = res.data
+            return data
+        }
+    })
 
-    // console.log(community)
-    // console.log(filter.houseType)
+    const handleSearch = () => {
+        try {
+            mutation.mutate()
+        } catch (err) {
+            return mutation.error?.message
+        }
+    }
 
-    // const changeValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // }
-
-    // console.log(filter)
 
     return (
         <div className="border border-gray-400 w-[90%] md:flex rounded-lg ">
@@ -94,10 +99,10 @@ const Filter = ({ className }: SliderProps) => {
                         // value={house}
                         // defaultValue={house}
                         name="houseType"
-                        onValueChange={(item) => setHouse(item)}
+                        onValueChange={(item) => setApartmentType(item)}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder={house} />
+                            <SelectValue placeholder={apartmentType} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -142,7 +147,9 @@ const Filter = ({ className }: SliderProps) => {
                     </div>
                 </div>
                 <div className="flex p-2 flex-1 justify-center items-center">
-                    <button className="h-full p-2 w-full lg:w-full lg:p-0 bg-gray-500 rounded-lg text-sm text-gray-900">
+                    <button
+                        onClick={handleSearch}
+                        className="h-full p-2 w-full lg:w-full lg:p-0 bg-gray-500 rounded-lg text-sm text-gray-900">
                         Search
                     </button>
                 </div>
