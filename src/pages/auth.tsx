@@ -1,42 +1,17 @@
 import Login from "@/components/auth/Login";
 import SignUp from "@/components/auth/SignUp";
 import ForgotPassword from "@/components/auth/forgotPassword";
-import VerifyOtp from "@/components/auth/verifyOTP";
+import VerifyOtp from "@/components/auth/verifyOtp";
 import Head from "next/head";
 import { useState } from "react";
 type Props = {};
 
 const Auth: React.FC<Props> = () => {
     const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        phoneNo: "",
         isNewUser: false,
-        verified: true,
+        verified: false,
         forgotPassword: false
     });
-
-    const handleSignup = () => {
-        // e.preventDefault()
-        // setForm(prev => ({ ...prev, verified: false }))
-
-    };
-    const handleLogin = () => {
-        // e.preventDefault()
-    };
-
-    const onChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        //update form state
-        setForm((prev) => ({
-            ...prev,
-            [event.target.name]: event.target.value,
-        }));
-    };
 
     return (
         <>
@@ -146,26 +121,18 @@ const Auth: React.FC<Props> = () => {
                         {/* form section */}
                         {(form.isNewUser && !form.forgotPassword && form.verified) && (
                             <SignUp
-                                form={form}
                                 setForm={setForm}
-                                handleSignup={handleSignup}
-                                onChange={onChange}
                             />
                         )}
                         {(!form.isNewUser && !form.forgotPassword && form.verified) && (
                             <Login
-                                form={form}
                                 setForm={setForm}
-                                handleLogin={handleLogin}
-                                onChange={onChange}
                             />
                         )}
                         {(!form.verified) && (<VerifyOtp setForm={setForm} />)}
                         {(form.forgotPassword) && (
                             <ForgotPassword
-                                form={form}
                                 setForm={setForm}
-                                onChange={onChange}
                             />
                         )}
                     </section>

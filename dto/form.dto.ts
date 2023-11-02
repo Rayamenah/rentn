@@ -1,3 +1,4 @@
+
 export interface signUpType {
   isNewUser: boolean
   verified: boolean
@@ -8,6 +9,11 @@ export interface signUpType {
   password: string
   confirmPassword: string
   forgotPassword: boolean
+}
+export interface authType {
+    isNewUser: boolean,
+    verified: boolean;
+    forgotPassword: boolean;
 }
 
 export interface listingType {
