@@ -56,28 +56,27 @@ const ForgotPassword = ({ setForm }: Props) => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
 
-                <div className='flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-14'>
-                    <input
-                        className='cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md'
-                        type='submit'
-                        value='Submit'
-                    />
-                    <button
-                        className='m-auto text-xs font-semibold text-gray-700 underline cursor-pointer'
-                        onClick={() =>
-                            setForm((prev) => ({
-                                ...prev,
-                                forgotPassword: false,
-                            }))
-                        }
-                    >
-                        Back to Log in
-                    </button>
-                </div>
-
-            </form >
-        </div >
-    )
+        <div className="flex flex-col gap-5 mt-8 max-w-xl w-full items-center border-none absolute left-0 bottom-14">
+          <input
+            className="cursor-pointer max-w-xl w-[70%] p-3 bg-black text-white border-none rounded-md"
+            type="submit"
+            value="Submit"
+          />
+          <button
+            className="m-auto text-xs font-semibold text-gray-700 underline cursor-pointer"
+            onClick={() =>
+              setForm((prev) => ({
+                ...prev,
+                forgotPassword: false,
+              }))
+            }
+          >
+            Back to Log in
+          </button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default ForgotPassword

@@ -142,4 +142,4 @@ const Login = ({ setForm }: Props) => {
     );
 };
 
-export default Login;
+export default Login

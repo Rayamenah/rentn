@@ -136,4 +136,4 @@ const SignUp = ({ setForm }: Props) => {
     );
 };
 
-export default SignUp;
+export default SignUp

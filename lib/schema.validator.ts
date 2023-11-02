@@ -225,7 +225,6 @@ export function priceSchemaValidation(data: {}) {
     }
 }
 
-
 // https://stackoverflow.com/questions/75285218/is-there-a-way-to-use-zod-to-validate-that-a-number-has-up-to-2-decimal-digits
 
 // TODO: fix eslint for lints
@@ -249,12 +248,12 @@ export function rentnSchemaValidator(data: {}) {
             .trim(),
     })
 
-    try {
-        signUpValidation.parse(data)
-    } catch (error: any) {
-        console.log('sign up validation error:: ', error)
-        return fromZodError(error).message
-    }
+  try {
+    signUpValidation.parse(data)
+  } catch (error: any) {
+    console.log('sign up validation error:: ', error)
+    return fromZodError(error).message
+  }
 }
 
 export function OtpZodError(data: {}) {
@@ -273,14 +272,12 @@ export function OtpZodError(data: {}) {
             .max(6, 'otp must not be greater six')
     })
 
-    try {
-        otpError.parse(data)
-    } catch (error: any) {
-        console.log('otp verification error', error)
-        return fromZodError(error)?.message
-
-    }
-
+  try {
+    otpError.parse(data)
+  } catch (error: any) {
+    console.log('otp verification error', error)
+    return fromZodError(error)?.message
+  }
 }
 
 export function RentnLoginValidationBody(data: any) {
