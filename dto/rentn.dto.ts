@@ -1,63 +1,63 @@
 export interface RentnDto {
-    email: string;
-    password: string;
+  email: string
+  password: string
 }
 
 export interface VerifyOtpDto {
-    email: string;
-    otp: string;
+  email: string
+  otp: string
 }
 
 export interface RentnLogin {
-    email: string;
-    password: string;
+  email: string
+  password: string
 }
 
 export enum Role {
-    Agent = 'agent',
-    User = 'user',
-    Admin = 'admin'
+  Agent = 'agent',
+  User = 'user',
+  Admin = 'admin',
 }
 export enum Gender {
-    Male = 'male',
-    Female = 'female',
+  Male = 'male',
+  Female = 'female',
 }
 
 export interface AgentProfileDto {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
-    gender: string;
+  firstName: string
+  lastName: string
+  phoneNumber: string
+  address: string
+  gender: string
 }
 
 export interface ProfileDto {
-    firstName: string;
-    lastName: string;
-    address: string;
-    phoneNumber: string;
-    gender: Gender;
-    role: Role;
+  firstName: string
+  lastName: string
+  address: string
+  phoneNumber: string
+  gender: Gender
+  role: Role
 }
 
 export interface UserProfileDto {
-    username: string;
-    email: string;
-    role: Role
-    password: string;
+  username: string
+  email: string
+  role: Role
+  password: string
 }
 
 export interface AdminProfileDto {
-    username: string;
-    email: string;
-    role: Role
-    address: string;
-    phoneNumber: string;
-    gender: Gender;
+  username: string
+  email: string
+  role: Role
+  address: string
+  phoneNumber: string
+  gender: Gender
 }
 
 export interface ResetDto {
-    email: string,
-    otp: string
-    password: string
+  email: string
+  otp: string
+  password: string
 }

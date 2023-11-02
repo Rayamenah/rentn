@@ -1,7 +1,7 @@
 export interface ApiResponseDto {
-    statusCode: number;
-    message: string;
-    data: any;
-    url: any;
-    date: string;
+  statusCode: number
+  message: string
+  data: any
+  url: any
+  date: string
 }

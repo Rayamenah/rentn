@@ -1,6 +1,6 @@
-import { prisma } from "config/prisma.connect";
-import cache from "./cacheData";
-import { Agent, Rentn } from "@prisma/client";
+import { prisma } from 'config/prisma.connect'
+import cache from './cacheData'
+import { Agent, Rentn } from '@prisma/client'
 
 export async function findRentn(email: string): Promise<Rentn | null> {
   try {
@@ -11,9 +11,9 @@ export async function findRentn(email: string): Promise<Rentn | null> {
       include: {
         admin: true,
         agent: true,
-      }
-    });
-    return rentn;
+      },
+    })
+    return rentn
   } catch (error: any) {
     throw new Error(`${error}, occurred from fetching db query in findRentn`)
   }
@@ -25,31 +25,30 @@ export async function findAgent(email: string): Promise<Agent | null> {
         email: email,
       },
       include: {
-        rentn: true
-      }
-    });
-    return findAgent;
+        rentn: true,
+      },
+    })
+    return findAgent
   } catch (error: any) {
-    throw new Error(`${error}, occurred from fetching agent db to query the data`)
+    throw new Error(
+      `${error}, occurred from fetching agent db to query the data`
+    )
   }
 }
 
 export async function addNewApartment(
   address: string,
   community: string
-): Promise<void>{
+): Promise<void> {
   const apartment = await prisma.apartment.findFirst({
     where: {
-      OR: [
-        {address: address},
-        {community: community}
-      ],
+      OR: [{ address: address }, { community: community }],
     },
     select: {
       address: true,
       community: true,
-    }
-  });
+    },
+  })
   // if (apartment){
   //   throw new Error(`An apartment with address "${address}" or community "${community}" already exists.`);
   // }

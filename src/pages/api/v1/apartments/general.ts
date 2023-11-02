@@ -1,6 +1,4 @@
 import { prisma } from 'config/prisma.connect'
-import { ApartmentType } from 'dto/agent.dto.interface'
-import { SearchHouseSchema } from 'lib/schema.validator'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -8,14 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const ifError = SearchHouseSchema(req.query)
-    if (ifError) {
-      return res.status(400).send({
-        message: 'there is an error with your req query',
-        error: ifError,
-      })
-    }
-    const { community, apartmentType, price, pageNumber } = req.query
+    const { cookies, pageNumber } = req.body
     const pageSize = 10
     const parsedPageNumber = parseInt(pageNumber as string, 10)
     if (isNaN(parsedPageNumber) || parsedPageNumber < 1) {
@@ -27,37 +18,28 @@ export default async function handler(
     const totalCount = await prisma.apartment.count()
     const totalPages = Math.ceil(totalCount / pageSize)
     const offset = (parsedPageNumber - 1) * pageSize
-
+    const findAllApartments = await prisma.apartment.findMany({
+      include: {
+        agent: true,
+        images: true,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+      take: pageSize,
+      skip: offset,
+    })
     if (offset >= totalCount) {
       return res.status(404).send({
         message:
           'Requested page not found. The specified page number is out of bounds.',
       })
     }
-    const useSearchParams = await prisma.apartment.findMany({
-      where: {
-        community: community as string,
-        apartmentType: apartmentType as ApartmentType,
-      },
-      take: pageSize,
-      skip: offset,
-      orderBy: {
-        createdAt: 'asc',
-      },
-    })
     return res.status(200).send({
-      data: useSearchParams,
+      data: findAllApartments,
       pages: totalPages,
       count: totalCount,
       currentPage: pageNumber,
-      message: 'request was successful',
     })
-  } catch (error: any) {
-    console.log(error)
-    console.log(error.message)
-    return res.status(500).send({
-      message: 'sever is currently unavailable',
-      data: error.message,
-    })
-  }
+  } catch (error: any) {}
 }
