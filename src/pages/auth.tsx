@@ -114,7 +114,7 @@ const Auth: React.FC<Props> = () => {
                             {(form.isNewUser && !form.forgotPassword) && "Sign up"}
                             {(!form.isNewUser && !form.forgotPassword) && "Log in"}
                             {(form.forgotPassword && !form.isNewUser) && 'Reset Password'}
-                            {/* {(!form.verified && !form.isNewUser) && 'Verify OTP'} */}
+                            {(!form.verified && !form.isNewUser) && 'Verify OTP'}
 
                         </div>
 
