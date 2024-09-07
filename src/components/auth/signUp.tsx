@@ -47,6 +47,13 @@ const SignUp = ({ setForm }: Props) => {
                 })
                 setForm(prev => ({ ...prev, email: "", password: "", confirmPassword: "", verified: false }))
             }
+            if (mutation.isError) {
+                toast({
+                    variant: "destructive",
+                    title: "Uh oh something went wrong.",
+                    description: mutation.error?.message
+                })
+            }
         } catch (err) {
             toast({
                 variant: "destructive",

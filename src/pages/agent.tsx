@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 const Agent = () => {
     const router = useRouter()
+
     return (
         <>
             <Head>

@@ -9,7 +9,7 @@ type Props = {};
 const Auth: React.FC<Props> = () => {
     const [form, setForm] = useState({
         isNewUser: false,
-        verified: false,
+        verified: true,
         forgotPassword: false
     });
 
@@ -45,10 +45,10 @@ const Auth: React.FC<Props> = () => {
                     </p>
 
                     <div className="relative flex flex-1 w-full ">
-                        {/* <img className='absolute top-10 left-0 z-[-1]' src='/sun 1.svg' />
-                    <div className='relative w-full'>
-                        <img className='absolute left-0 bottom-0 z-10 w-full bg-white' src='/footer-image.svg' />
-                    </div> */}
+                        <img className='absolute top-10 left-0 z-[-1]' src='/sun 1.svg' />
+                        <div className='relative w-full'>
+                            <img className='absolute left-0 bottom-0 z-10 w-full bg-white' src='/footer-image.svg' />
+                        </div>
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@ const Auth: React.FC<Props> = () => {
                             {(form.isNewUser && !form.forgotPassword) && "Sign up"}
                             {(!form.isNewUser && !form.forgotPassword) && "Log in"}
                             {(form.forgotPassword && !form.isNewUser) && 'Reset Password'}
-                            {(!form.verified) && 'Verify OTP'}
+                            {/* {(!form.verified && !form.isNewUser) && 'Verify OTP'} */}
 
                         </div>
 

@@ -40,6 +40,13 @@ const Login = ({ setForm }: Props) => {
                 toast({
                     title: "Signed in",
                 })
+            }
+            if (mutation.isError) {
+                toast({
+                    variant: "destructive",
+                    title: "Uh oh something went wrong.",
+                    description: mutation.error?.message
+                })
                 setLogin(prev => ({ ...prev, email: "", password: "" }))
 
             }

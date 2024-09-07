@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { SlLocationPin } from "react-icons/sl";
+import { toast } from "../ui/use-toast";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 
@@ -37,6 +38,13 @@ const SearchFilter = ({ className }: SliderProps) => {
     const handleSearch = () => {
         try {
             mutation.mutate()
+            if (mutation.isError) {
+                toast({
+                    variant: "destructive",
+                    title: "Uh oh something went wrong.",
+                    description: mutation.error?.message
+                })
+            }
         } catch (err) {
             return mutation.error?.message
         }
