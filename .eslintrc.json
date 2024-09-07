@@ -4,7 +4,8 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "prettier"
   ],
   "plugins": ["prettier"],
   "globals": {

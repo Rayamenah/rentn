@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Filter from "../filter/filter.tsx"
+import Filter from "../filter/filter"
 const Landing = () => {
     return (
         <section className='mb-10 flex justify-center items-center sm:justify-center flex-col gap-3 md:gap-8'>
