@@ -1,4 +1,4 @@
-import Landing from "@/components/Landing/Landing";
+import Landing from "@/components/landing/landing";
 import Head from "next/head";
 
 export default function Home() {

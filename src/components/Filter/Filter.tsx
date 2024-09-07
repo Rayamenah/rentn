@@ -3,14 +3,14 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
-    SelectValue,
+    SelectValue
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
@@ -25,6 +25,7 @@ const Filter = ({ className }: SliderProps) => {
     const [community, setCommunity] = useState("iterigbi");
     const [apartmentType, setApartmentType] = useState("Bedsitter");
 
+    const router = useRouter()
     const mutation = useMutation({
         mutationFn: async () => {
             const res = await axios.get(`/api/v1/search/?community=${community}&apartmentType=${apartmentType}&price=${price}&page=${1}`)
@@ -35,7 +36,9 @@ const Filter = ({ className }: SliderProps) => {
 
     const handleSearch = () => {
         try {
+            router.push('/search')
             mutation.mutate()
+
         } catch (err) {
             return mutation.error?.message
         }

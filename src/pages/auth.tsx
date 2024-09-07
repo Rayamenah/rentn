@@ -1,5 +1,5 @@
-import Login from "@/components/auth/Login";
-import SignUp from "@/components/auth/SignUp";
+import Login from "@/components/auth/login";
+import SignUp from "@/components/auth/signUp";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import VerifyOtp from "@/components/auth/verifyOTP";
 import Head from "next/head";

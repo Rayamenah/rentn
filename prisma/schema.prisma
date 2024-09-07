@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("rentn_render")
+  url      = env("DATABASE_URL")
 }
 
 enum ROLE {
@@ -21,7 +21,7 @@ model Image {
   Apartment    Apartment? @relation(fields: [apartmentId], references: [id])
   apartmentId  String?
   uploadBy     String
-  createdAt     DateTime      @default(now()) @db.Timestamptz()
+  createdAt    DateTime   @default(now()) @db.Timestamptz()
 }
 
 model Rentn {

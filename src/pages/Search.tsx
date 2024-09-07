@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { SlLocationPin } from "react-icons/sl";
 import { TbArrowLeft } from "react-icons/tb";
-import SearchFilter from "../components/Filter/searchFilter";
+import SearchFilter from "../components/filter/searchFilter";
 
 
 const Search = () => {
@@ -12,7 +12,6 @@ const Search = () => {
     const goBack = () => {
         router.back();
     };
-
 
 
     const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];

@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout'
+import Layout from '@/components/layout'
 import { Toaster } from '@/components/ui/toaster'
 import '@/styles/globals.css'
 import "@fontsource/montserrat"
